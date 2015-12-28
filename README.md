@@ -1,6 +1,6 @@
 # ko·an
 ## /ˈkōän/
 
-Japanese, literally ‘matter for public thought,’ from Chinese _gōngàn_ *‘official business.’*
+_Japanese, literally ‘matter for public thought,’ from Chinese gōngàn *‘official business.’*_
 
 Ionic + Material + ngCordova (touch, keychain) + blockapps-js + eth-lightwallet
