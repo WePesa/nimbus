@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['underscore', 'mylib', 'lw'])
+angular.module('starter.controllers', ['underscore', 'lw'])
 
 .controller('DashCtrl', function($scope) {})
 
@@ -52,7 +52,7 @@ angular.module('starter.controllers', ['underscore', 'mylib', 'lw'])
 
 })
 
-.controller('AccountCtrl', function($scope, Accounts, _, mylib) {
+.controller('AccountCtrl', function($scope, Accounts, _) {
   $scope.settings = {
     enableFriends: true
   };

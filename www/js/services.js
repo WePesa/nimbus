@@ -1,4 +1,4 @@
-angular.module('starter.services', ['underscore', 'mylib', 'lw', 'ngCordova'])
+angular.module('starter.services', ['underscore', 'lw', 'ngCordova'])
 
 .factory('Chats', function ($http, $rootScope, $stateParams, $q) {
 
@@ -65,7 +65,7 @@ angular.module('starter.services', ['underscore', 'mylib', 'lw', 'ngCordova'])
 })
 
 
-.factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, mylib, lw, $cordovaTouchID, $ionicPlatform, $cordovaKeychain) {
+.factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, lw, $cordovaTouchID, $ionicPlatform, $cordovaKeychain) {
 
   return {
 
@@ -84,7 +84,7 @@ angular.module('starter.services', ['underscore', 'mylib', 'lw', 'ngCordova'])
       });
 
       $ionicPlatform.ready(function() {
-        $cordovaKeychain.setForKey("key", "service", "value").then(function(value) {
+        $cordovaKeychain.setForKey("key", "service", "super secret!").then(function(value) {
           console.log(value);
           $cordovaKeychain.getForKey("key", "service").then(function(value) {
             console.log(value);
@@ -109,9 +109,6 @@ angular.module('starter.services', ['underscore', 'mylib', 'lw', 'ngCordova'])
       console.log("lww: " + JSON.stringify($window.lightwallet))
       console.log("ba: " + JSON.stringify(blockapps))
       console.log("baw: "+ JSON.stringify($window['blockapps-js']))
-      console.log("mylib: " + mylib)
-      console.log("mylib.VERSION: " + mylib.VERSION)
-      console.log(mylib)
 
       var ba2 = require('blockapps-js')
       console.log("ba2: " + JSON.stringify(ba2))
@@ -136,14 +133,8 @@ var blockapps = angular.module('blockapps', [])
   return $window.blockapps; // assumes blockapps has already been loaded on the page
 }]);
 
-var mylib = angular.module('mylib', [])
-.factory('mylib', ['$window', function($window) {
-  console.log("hello mylib factory: " + JSON.stringify($window.mylib))
-  return $window.mylib; // assumes blockapps has already been loaded on the page
-}]);
-
 var lw = angular.module('lw', [])
 .factory('lw', ['$window', function($window) {
   console.log("hello lw factory: " + JSON.stringify($window.lightwallet))
-  return $window.lightwallet; // assumes blockapps has already been loaded on the page
+  return $window.lightwallet; // assumes lw has already been loaded on the page
 }]);
