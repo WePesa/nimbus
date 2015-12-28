@@ -1,7 +1,7 @@
 {
-  "name": "myapp",
-  "version": "1.1.1",
-  "description": "myApp: An Ionic project",
+  "name": "koan",
+  "version": "0.1.0",
+  "description": "koan: a mobile ethereum riddle",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",

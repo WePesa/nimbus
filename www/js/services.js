@@ -1,23 +1,20 @@
-angular.module('starter.services', ['underscore', 'lw', 'ngCordova'])
+angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'])
 
 .factory('Chats', function ($http, $rootScope, $stateParams, $q) {
 
-  var url = 'http://genpact.centralus.cloudapp.azure.com/eth/v1.0/transaction?'
+  var baseUri = 'http://genpact.centralus.cloudapp.azure.com/eth/v1.0'
+
   var myaddress = 'e1fd0d4a52b75a694de8b55528ad48e2e2cf7859'
 
-
-  //var url = 'https://testapi.blockapps.net/eth/v1.0/log?'
   //var myaddress = '9d551f41fed6fc27b719777c224dfecce170004d'
 
   return {
     all: function () {
-      console.log("all()")
-      return $http.get(url+'address='+myaddress)
+      return $http.get(baseUri+'/transaction?address='+myaddress)
       //return $http.get(url, { params: { address: myaddress } })  //{ user_id: $rootScope.session } })
     },
     get: function (hash) {
-      console.log("get("+hash+")")
-      return $http.get(url+'hash='+hash)
+      return $http.get(baseUri+'/transaction?hash='+hash)
        //return $http.get('https://friends.json/getOne', { params: { user_id: $rootScope.session, chat_id: $stateParams.idchat } })
      },
 
@@ -28,8 +25,7 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova'])
      },
 
      balance: function(account){
-      console.log('balance()')
-      return $http.get('http://genpact.centralus.cloudapp.azure.com/eth/v1.0/account?address='+myaddress)
+      return $http.get(baseUri + '/account?address='+myaddress)
      },
 
      getNestedData: function() {
@@ -65,7 +61,7 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova'])
 })
 
 
-.factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, lw, $cordovaTouchID, $ionicPlatform, $cordovaKeychain) {
+.factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, lw, $cordovaTouchID, $ionicPlatform, $cordovaKeychain, blockapps) {
 
   return {
 
@@ -106,12 +102,7 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova'])
       console.log("Accounts.test()")
       console.log("underscore: " + _)
       console.log("lw: " + JSON.stringify(lightwallet))
-      console.log("lww: " + JSON.stringify($window.lightwallet))
       console.log("ba: " + JSON.stringify(blockapps))
-      console.log("baw: "+ JSON.stringify($window['blockapps-js']))
-
-      var ba2 = require('blockapps-js')
-      console.log("ba2: " + JSON.stringify(ba2))
 
       var secretSeed = lightwallet.keystore.generateRandomSeed()
 
@@ -123,18 +114,17 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova'])
 
 var underscore = angular.module('underscore',[]);
 underscore.factory('_', ['$window', function($window) {
-  console.log("hello underscore factory: " + JSON.stringify($window._))
   return $window._; // assumes underscore has already been loaded on the page
 }]);
 
 var blockapps = angular.module('blockapps', [])
 .factory('blockapps', ['$window', function($window) {
-  console.log("hello blockapps factory: " + JSON.stringify($window.blockapps))
-  return $window.blockapps; // assumes blockapps has already been loaded on the page
+
+  return require('blockapps-js')
+  //return $window.blockapps; // assumes blockapps has already been loaded on the page
 }]);
 
 var lw = angular.module('lw', [])
 .factory('lw', ['$window', function($window) {
-  console.log("hello lw factory: " + JSON.stringify($window.lightwallet))
   return $window.lightwallet; // assumes lw has already been loaded on the page
 }]);

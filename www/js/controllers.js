@@ -1,8 +1,8 @@
-angular.module('starter.controllers', ['underscore', 'lw'])
+angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats, _) {
+.controller('ChatsCtrl', function($scope, Chats, _, blockapps) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -18,7 +18,6 @@ angular.module('starter.controllers', ['underscore', 'lw'])
     $scope.chats = response;
     $scope.faces = response.map(function(x){return Chats.face(x.hash)})
 
-
     $scope.c2fmap = response.map(function(value, index) {
       return {
           data: value,
@@ -30,14 +29,14 @@ angular.module('starter.controllers', ['underscore', 'lw'])
 
   Chats.balance('bla').success(function(response){
     console.log('balance response: ' + JSON.stringify(response))
-      $scope.balance = response[0].balance;
-      console.log("balace is "+$scope.balance)
+      $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether")
+      console.log("ETH: " + $scope.balance)
   })
 
-   Chats.getNestedData().success(function(result) {
-      $scope.combinedItems = result;
-      console.log(JSON.stringify(result))
-   });
+   // Chats.getNestedData().success(function(result) {
+   //    $scope.combinedItems = result;
+   //    console.log(JSON.stringify(result))
+   // });
 
 
 })
@@ -60,5 +59,6 @@ angular.module('starter.controllers', ['underscore', 'lw'])
   console.log("hello AccountCtrl")
 
   Accounts.newKey()
+  Accounts.test()
 
 });
