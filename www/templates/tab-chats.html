@@ -1,0 +1,23 @@
+<ion-view view-title="Transactions">
+  <ion-content>
+    <ion-scroll style="height: 700px"> <!--FIXME dynamic -->
+      <ion-list>
+        <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="c2f in c2fmap" type="item-text-wrap" href="#/tab/chats/{{c2f.data.hash}}">
+          <img ng-src="{{c2f.value}}">
+          <h2>{{c2f.data.value}}</h2>
+          <p>{{c2f.data.hash}}</p>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+
+          <!-- <ion-option-button class="button-assertive" ng-click="remove(chat)">
+            Delete
+             -->
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
+    </ion-scroll>
+    <div class="bar bar-footer bar-balanced">
+      <div class="title">Account balance: {{balance}}</div>
+    </div>
+  </ion-content>
+</ion-view>
+
