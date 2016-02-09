@@ -1,5 +1,28 @@
 angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'])
 
+.factory('Camera', function ($http, $rootScope, $stateParams, $q, $cordovaBarcodeScanner) {
+
+  return {
+
+    test: function(){
+      console.log("testing camera")
+    },
+
+    shoot: function(){
+
+        $cordovaBarcodeScanner.scan().then(function(imageData) {
+            alert(imageData.text);
+            console.log("Barcode Format -> " + imageData.format);
+            console.log("Cancelled -> " + imageData.cancelled);
+        }, function(error) {
+            console.log("An error happened -> " + error);
+        });
+    }
+
+  }
+
+})
+
 .factory('Chats', function ($http, $rootScope, $stateParams, $q) {
 
   var baseUri = 'http://genpact.centralus.cloudapp.azure.com/eth/v1.0'
@@ -68,28 +91,35 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
     newKey : function(){
 
       $ionicPlatform.ready(function() {
-        var x = $cordovaTouchID.checkSupport()
-        x.then(function(greeting) {
-          console.log('Success: ' + greeting);
-        }, function(reason) {
-          console.log('Failed: ' + reason);
-        }, function(update) {
-          console.log('Got notification: ' + update);
-        });
-        console.log("testing touchid: " + x)
-      });
 
-      $ionicPlatform.ready(function() {
-        $cordovaKeychain.setForKey("key", "service", "super secret!").then(function(value) {
-          console.log(value);
-          $cordovaKeychain.getForKey("key", "service").then(function(value) {
+       // if(ionic.Platform.isIOS()){
+
+          var x = $cordovaTouchID.checkSupport()
+          x.then(function(greeting) {
+            console.log('Success: ' + greeting);
+          }, function(reason) {
+            console.log('Failed: ' + reason);
+          }, function(update) {
+            console.log('Got notification: ' + update);
+          });
+          console.log("testing touchid: " + x)
+
+          console.log(JSON.stringify(ionic.Platform))
+
+          $cordovaKeychain.setForKey("key", "service", "super secret!").then(function(value) {
             console.log(value);
+            $cordovaKeychain.getForKey("key", "service").then(function(value) {
+              console.log(value);
+            }, function (err) {
+              console.error(err);
+            });
           }, function (err) {
             console.error(err);
-          });
-        }, function (err) {
-          console.error(err);
-        })
+          })
+      //  } else {
+      //    console.log("not on IOS")
+      //  }
+
       });
 
 
