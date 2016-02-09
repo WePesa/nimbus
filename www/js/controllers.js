@@ -29,7 +29,7 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
   Chats.balance('bla').success(function(response){
     console.log('balance response: ' + JSON.stringify(response))
-      $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether")
+      $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether").toPrecision(10)
       console.log("ETH: " + $scope.balance)
   })
 
@@ -60,5 +60,16 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
   Accounts.newKey()
   Accounts.test()
+
+})
+
+.controller('CameraCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner, Camera) {
+  $scope.settings = {
+    enableFriends: true
+  };
+
+  console.log("hello CameraCtrl")
+  Camera.test()
+  Camera.shoot()
 
 });
