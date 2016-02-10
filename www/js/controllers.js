@@ -57,9 +57,23 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
   };
 
   console.log("hello AccountCtrl")
-
   Accounts.newKey()
   Accounts.test()
+})
+
+.controller('SettingsCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner) {
+
+  $scope.settings = {
+    camera2: JSON.stringify($cordovaBarcodeScanner.scan),
+    camera: (JSON.stringify($cordovaBarcodeScanner) !== "{}")
+  };
+
+  if (typeof $cordovaBarcodeScanner === 'undefined') {
+   console.log("camera undefined")
+  }
+
+  console.log("hello SettingsCtrl")
+  console.log("$cordovaBarcodeScanner: " + JSON.stringify($cordovaBarcodeScanner))
 
 })
 
