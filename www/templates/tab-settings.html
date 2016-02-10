@@ -1,0 +1,25 @@
+<ion-view view-title="Settings">
+  <ion-content>
+
+    <ion-list>
+
+        <div class="item item-divider">
+            Customize behavior
+         </div>
+    
+        <ion-toggle  ng-model="settings.enableFriends" ng-click="remove(chat)">
+            Sign every transaction
+        </ion-toggle>
+
+        <div class="item item-divider">
+            Phone info
+        </div>
+
+        <ion-toggle  ng-model="settings.camera" disabled>
+        Do we have a camera?: {{settings.camera2}}
+        </ion-toggle>
+
+    </ion-list>
+    
+  </ion-content>
+</ion-view>
