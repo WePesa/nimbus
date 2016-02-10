@@ -13,8 +13,23 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
           console.log("a:" + a)
         })
 
-        $cordovaDevice.getDevice();
-        console.log("$cordovaDevice: " + JSON.stringify($cordovaDevice)) 
+        var d = $cordovaDevice.getCordova();
+        console.log("cordova: " + d) 
+ 
+        var device = $cordovaDevice.getDevice();
+        console.log("device: " + JSON.stringify(device)) 
+
+        var model = $cordovaDevice.getModel();
+        console.log("model: " + model) 
+
+        var platform = $cordovaDevice.getPlatform();
+        console.log("platform: " + platform) 
+
+        var uuid = $cordovaDevice.getUUID();
+        console.log("uuid: " + uuid) 
+
+        var version = $cordovaDevice.getVersion();
+        console.log("version: " + version) 
     },
 
     shoot: function(){
