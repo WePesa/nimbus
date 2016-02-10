@@ -70,17 +70,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.account', {
-    url: "/account",
-    abstract: true,
-    controller: 'AccountCtrl',
-    templateUrl: function() {
-      if (ionic.Platform.isIOS()) {
-          return  "templates/tab-camera.html";
+  .state('tab.settings', {
+    url: '/settings',
+    views: {
+      'tab-settings': {
+        templateUrl: 'templates/tab-settings.html',
+        controller: 'SettingsCtrl'
       }
-      return "templates/tab-camera.html";
     }
   })
+
+  // .state('tab.account', {
+  //   url: "/account",
+  //   abstract: true,
+  //   controller: 'AccountCtrl',
+  //   templateUrl: function() {
+  //     if (ionic.Platform.isIOS()) {
+  //         return  "templates/tab-camera.html";
+  //     }
+  //     return "templates/tab-camera.html";
+  //   }
+  // })
 
   .state('tab.camera', {
     url: '/camera',
