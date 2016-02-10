@@ -1,22 +1,33 @@
 angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'])
 
-.factory('Camera', function ($http, $rootScope, $stateParams, $q, $cordovaBarcodeScanner) {
+.factory('Camera', function ($http, $rootScope, $stateParams, $q, $cordovaCamera, $cordovaBarcodeScanner, $cordovaDevice) {
 
   return {
 
     test: function(){
       console.log("testing camera")
+
+
+        console.log("$cordovaCamera: " + JSON.stringify($cordovaCamera))
+        $cordovaCamera.getPicture().then(function(a){
+          console.log("a:" + a)
+        })
+
+        $cordovaDevice.getDevice();
+        console.log("$cordovaDevice: " + JSON.stringify($cordovaDevice)) 
     },
 
     shoot: function(){
 
-        $cordovaBarcodeScanner.scan().then(function(imageData) {
-            alert(imageData.text);
-            console.log("Barcode Format -> " + imageData.format);
-            console.log("Cancelled -> " + imageData.cancelled);
-        }, function(error) {
-            console.log("An error happened -> " + error);
-        });
+        console.log(JSON.stringify($cordovaBarcodeScanner));
+
+        // $cordovaBarcodeScanner.scan().then(function(imageData) {
+        //     alert(imageData.text);
+        //     console.log("Barcode Format -> " + imageData.format);
+        //     console.log("Cancelled -> " + imageData.cancelled);
+        // }, function(error) {
+        //     console.log("An error happened -> " + error);
+        // });
     }
 
   }

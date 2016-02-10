@@ -39,7 +39,8 @@
       },
       "locator": "https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git",
       "id": "cordova-plugin-customurlscheme"
-    }
+    },
+    "org.apache.cordova.camera"
   ],
   "cordovaPlatforms": [
     "ios"
