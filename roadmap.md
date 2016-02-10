@@ -3,17 +3,17 @@
 ## Features
 
 - wallet view:
-- - latest transactions
-- - inspect addresses
+-  - latest transactions
+-  - inspect addresses
 - Sign transactions on Strato node
 - Scan addresses using QR codes, send value securely
 - uPort integration:
-- - create identity, upload photo etc
-- - if foreign address is on uPort, display photo
+-  - create identity, upload photo etc
+-  - if foreign address is on uPort, display photo
 - smart contract interaction ("hardcoded dApps")
-- - PEX: proof-of-existence uploading photo to ipfs + hash on blockchain
-- - ESCROW: isomorphic to one side of dual desktop view
-- - ?
+-  - PEX: proof-of-existence uploading photo to ipfs + hash on blockchain
+-  - ESCROW: isomorphic to one side of dual desktop view
+-  - ?
 
 ## Platform specifics
 
