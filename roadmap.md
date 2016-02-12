@@ -13,7 +13,7 @@
 - smart contract interaction ("hardcoded dApps")
 -  - PEX: proof-of-existence uploading photo to ipfs + hash on blockchain
 -  - ESCROW: isomorphic to one side of dual desktop view
--  - ?
+-  - PROXY: can only pay if "unlocked"
 
 ## Platform specifics
 

@@ -4,10 +4,11 @@
   "description": "koan: a mobile ethereum riddle",
   "dependencies": {
     "gulp": "^3.5.6",
-    "gulp-sass": "^2.0.4",
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",
-    "gulp-rename": "^1.2.0"
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^2.0.4",
+    "ipfs": "^0.3.0"
   },
   "devDependencies": {
     "bower": "^1.3.3",
@@ -22,25 +23,17 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
     {
-      "locator": "https://github.com/leecrossley/cordova-plugin-touchid.git",
-      "id": "cordova-plugin-touchid"
-    },
-    {
-      "locator": "https://github.com/shazron/KeychainPlugin.git",
-      "id": "com.shazron.cordova.plugin.keychainutil"
-    },
-    {
-      "locator": "https://github.com/phonegap/phonegap-plugin-barcodescanner.git",
-      "id": "phonegap-plugin-barcodescanner"
-    },
-    {
       "variables": {
         "": ""
       },
       "locator": "https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git",
       "id": "cordova-plugin-customurlscheme"
     },
-    "org.apache.cordova.camera"
+    "org.apache.cordova.camera",
+    {
+      "locator": "https://github.com/phonegap/phonegap-plugin-barcodescanner",
+      "id": "phonegap-plugin-barcodescanner"
+    }
   ],
   "cordovaPlatforms": [
     "ios"

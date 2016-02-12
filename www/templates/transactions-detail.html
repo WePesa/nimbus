@@ -4,21 +4,27 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{chat.name}}">
+<ion-view view-title="{{transaction.name}}">
   <ion-content class="padding">
     <img ng-src="{{face}}" style="width: 64px; height: 64px">
 
     <div class="card">
       <div class="item item-divider">
-        Type: {{chat[0].transactionType}}
+        Type: {{transaction[0].transactionType}}
       </div>
       <div class="item item-text-wrap">
-        From: {{chat[0].from}}
+        From: {{transaction[0].from}}
         <br>
-        To: {{chat[0].to}}
+        To: {{transaction[0].to}}
       </div>
       <div class="item item-divider">
-        Block number: {{chat[0].blockNumber}}
+        Block number: {{transaction[0].blockNumber}}
+      </div>
+
+      <img ng=src="{{barcode}}" style="width: 128px; height: 128px">
+
+      <div class="item item-divider">
+        <a href="#/tab/transactions">Go back</a>
       </div>
     </div>
   </ion-content>

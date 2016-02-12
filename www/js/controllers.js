@@ -1,8 +1,11 @@
 angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope) {
 
-.controller('ChatsCtrl', function($scope, Chats, _, blockapps) {
+
+})
+
+.controller('TransactionsCtrl', function($scope, Transactions, _, blockapps) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -11,12 +14,12 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  Chats.all().success(function(response){
-    console.log("hello chat.all()") 
+  Transactions.all().success(function(response){
+    console.log("hello Transactios.all()") 
 
-    $scope.c2fmap2 = _.object(response, response.map(function(x){return Chats.face(x.hash)}))
-    $scope.chats = response;
-    $scope.faces = response.map(function(x){return Chats.face(x.hash)})
+    $scope.c2fmap2 = _.object(response, response.map(function(x){return Transactions.face(x.hash)}))
+    $scope.transactions = response;
+    $scope.faces = response.map(function(x){return Transactions.face(x.hash)})
 
     $scope.c2fmap = response.map(function(value, index) {
       return {
@@ -27,7 +30,7 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
   })
 
-  Chats.balance('bla').success(function(response){
+  Transactions.balance('bla').success(function(response){
     console.log('balance response: ' + JSON.stringify(response))
       $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether").toPrecision(10)
       console.log("ETH: " + $scope.balance)
@@ -41,24 +44,39 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  console.log("hello chat.get()")
-  Chats.get($stateParams.chatId).success(function(response){
-    $scope.chat = response;
-    
-    $scope.face = Chats.face(response[0].hash)
+.controller('TransactionsDetailCtrl', function($scope, $stateParams, Transactions) {
+  console.log("hello transactiondetail.get()")
+  Transactions.get($stateParams.txId).success(function(response){
+    $scope.transaction = response;
+    $scope.face = Transactions.face(response[0].hash)
   })
 
 })
 
 .controller('AccountCtrl', function($scope, Accounts, _) {
+
+  $scope.theperson = "noone";
+
   $scope.settings = {
     enableFriends: true
   };
 
   console.log("hello AccountCtrl")
+  console.log("hello IPFS___: " + JSON.stringify(ipfs))
   Accounts.newKey()
   Accounts.test()
+
+
+  $scope.signTx = function(){
+    console.log("signTx()")
+    Accounts.signTx("0x666666");
+  },
+
+  $scope.getPersona = function(){
+    Accounts.getPersona().then(function(x){ console.log("XXXX: " + JSON.stringify(x)); $scope.theperson = x.value});
+    console.log("getPersona() returned")
+  }
+
 })
 
 .controller('SettingsCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner) {
@@ -77,13 +95,31 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
 })
 
-.controller('CameraCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner, Camera) {
+.controller('CameraCtrl', function($scope, _, $cordovaBarcodeScanner, Camera) {
   $scope.settings = {
     enableFriends: true
   };
 
+  $scope.address = "default"
+
+  // $scope.$on('$ionicView.enter', function(e) {
+  //     $scope.address = Camera.shoot();
+  // });
+
   console.log("hello CameraCtrl")
-  Camera.test()
-  Camera.shoot()
+  Camera.test();
+
+  // EVERYTHING ASYNC
+
+  $scope.shoot = function(){
+
+    Camera.shoot().then(function(result){
+      $scope.address = result;
+      console.log("wtf: "+$scope.address)
+      alert("wtf: " + $scope.address)
+    })
+
+
+  }
 
 });

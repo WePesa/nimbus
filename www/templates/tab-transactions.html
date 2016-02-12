@@ -2,7 +2,7 @@
   <ion-content>
     <ion-scroll style="height: 700px"> <!--FIXME dynamic -->
       <ion-list>
-        <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="c2f in c2fmap" type="item-text-wrap" href="#/tab/chats/{{c2f.data.hash}}">
+        <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="c2f in c2fmap" type="item-text-wrap" href="#/tab/transactions/{{c2f.data.hash}}">
           <img ng-src="{{c2f.value}}">
           <h2>{{c2f.data.value}}</h2>
           <p>{{c2f.data.hash}}</p>
