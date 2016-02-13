@@ -6,7 +6,7 @@ console.log("LOADING IPFS")
 
 try {
   ipfsApi  = require('ipfs-api/dist/ipfsapi.min.js');
-} catch(e) {console.log("FAIL")}
+} catch(e) {console.log("FAIL ")}
 
 var base58   = require('bitcore/lib/encoding/base58.js');
 var concat   = require('concat-stream');
@@ -110,6 +110,7 @@ ipfs.catJson = function(ipfsHash, callback) {
 };
 
 module.exports = ipfs;
+console.log("exports: " + JSON.stringify(ipfs.catJson))
 
 }).call(this,require("buffer").Buffer)
 },{"bitcore/lib/encoding/base58.js":2,"buffer":6,"concat-stream":12,"ipfs-api/dist/ipfsapi.min.js":26}],2:[function(require,module,exports){

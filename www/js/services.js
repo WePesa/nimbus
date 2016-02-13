@@ -1,4 +1,4 @@
-angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps', 'ipfs'])
+angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps', 'ipfs_'])
 
 .factory('Camera', function ($http, $rootScope, $stateParams, $q, _, $cordovaCamera, $cordovaBarcodeScanner, $cordovaDevice) {
 
@@ -118,7 +118,7 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
 })
 
 
-.factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, lw, blockapps, $ionicPlatform, ipfs) { //$cordovaKeychain, $cordovaTouchID
+.factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, lw, blockapps, $ionicPlatform, ipfs_) { //$cordovaKeychain, $cordovaTouchID
 
   var privkey = "e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d";
 
@@ -148,6 +148,34 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
   var Units = blockapps.ethbase.Units;
 
   return {
+
+    newtest : function(){
+
+      return new Promise( function(accept, reject){
+
+        var personaInfo = {
+          name: "Kristoffer",
+          info: "blah"
+        }
+
+        // put attrib
+        ipfs_.addJson(personaInfo, function(err, ipfsHash) {
+          console.log("ipfshash: " + ipfsHash);
+
+           // get attrib
+           ipfs_.catJson(ipfsHash,function (err, personaObj)  {
+              
+              if (err !== null) { reject(err); return; }
+              console.log("person: " + JSON.stringify(personaObj));
+              accept(personaObj);
+              
+              
+            });
+
+        });
+      })
+
+    },
 
     getPersona : function(){
       console.log("getPersona()")
@@ -244,12 +272,11 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
   }
 })
 
-var ipfs = angular.module('ipfs',[]);
-ipfs.factory('ipfs', ['$window', function($window) {
-  //var i =  require('ipfs-js');
-  //return $window.ipfs; //
-  var ipfs = window.ipfsAPI();
-  return ipfs;  
+var ipfs_ = angular.module('ipfs_',[]);
+ipfs_.factory('ipfs_', ['$window', function($window) {
+  console.log("everything: " + JSON.stringify(ipfs))
+  ipfs.setProvider({host: "104.131.53.68", port: 5001});
+  return ipfs; //
 }]);
 
 var underscore = angular.module('underscore',[]);
@@ -260,6 +287,7 @@ underscore.factory('_', ['$window', function($window) {
 var blockapps = angular.module('blockapps', [])
 .factory('blockapps', ['$window', function($window) {
 
+  console.log("ba ipfs: " + require('blockapps-js').ipfs)
   var b = require('blockapps-js')
   return b;
   //return $window.blockapps; // assumes blockapps has already been loaded on the page

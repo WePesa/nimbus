@@ -62,10 +62,11 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
   };
 
   console.log("hello AccountCtrl")
-  console.log("hello IPFS___: " + JSON.stringify(ipfs))
+
   Accounts.newKey()
   Accounts.test()
 
+  Accounts.newtest().then(function(a){console.log("ADFASFSDF!!!");$scope.apersona = JSON.stringify(a)})
 
   $scope.signTx = function(){
     console.log("signTx()")
