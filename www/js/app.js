@@ -90,6 +90,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('tab.account-detail', {
+    url: '/account/:accId',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/account-detail.html',
+        controller: 'AccountDetailCtrl'
+      }
+    }
+  })
+
   // .state('tab.account', {
   //   url: "/account",
   //   abstract: true,

@@ -41,7 +41,6 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
           value: $scope.faces[index]
       }
     });
-
   })
 
   Transactions.balance('bla').success(function(response){
@@ -59,7 +58,7 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 })
 
 .controller('TransactionsDetailCtrl', function($scope, $stateParams, Transactions) {
-  console.log("hello transactiondetail.get()")
+  console.log("hello TransactionsDetailCtrl()")
   Transactions.get($stateParams.txId).success(function(response){
     $scope.transaction = response;
     $scope.face = Transactions.face(response[0].hash)
@@ -67,8 +66,24 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
 })
 
+.controller('AccountDetailCtrl', function($scope, $stateParams, Transactions, Accounts) {
+  console.log("hello AccountDetailCtrl()")
+  Transactions.get($stateParams.txId).success(function(response){
+    //$scope.transaction = response;
+    //$scope.face = Transactions.face(response[0].hash)
+  })
+
+})
+
 .controller('AccountCtrl', function($scope, Accounts, _) {
   console.log("Hello AccountCtrl")
+
+  Accounts.getAllAccounts().then(function(v){
+
+    $scope.allUsers = ["MrX", "MrY", "MrZ"];
+
+  });
+
 
   // ethereum address <-> ipfsHash -> json schema
 

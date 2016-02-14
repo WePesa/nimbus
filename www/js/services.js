@@ -176,6 +176,16 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
 
   return {
 
+    getAllAccounts : function(){
+
+      return new Promise(function(accept, reject){
+
+        accept(1);
+
+      })
+
+    },
+
     setPersona : function(){
       console.log("setPersona()")
 

@@ -1,0 +1,37 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{transaction.name}}">
+  <ion-content class="padding">
+    <img ng-src="{{face}}" style="width: 64px; height: 64px">
+
+    <div class="card">
+      <div class="item item-divider">
+        Type: {{transaction[0].transactionType}}
+      </div>
+      <div class="item item-text-wrap">
+        From: {{transaction[0].from}}
+        <br>
+        To: {{transaction[0].to}}
+      </div>
+      <div class="item item-divider">
+        Block number: {{transaction[0].blockNumber}}
+      </div>
+
+      <img ng=src="{{barcode}}" style="width: 128px; height: 128px">
+
+      <div class="item item-divider">
+        <a href="#/tab/account">Go back</a>
+      </div>
+    </div>
+
+    <div class="button-bar bar-footer">
+      <a class="button button-balanced" ng-click="setPersona()">Update Persona</a>
+      <a class="button button-assertive" ng-click="getPersona()">Clear Persona</a>
+    </div>
+
+  </ion-content>
+</ion-view>
