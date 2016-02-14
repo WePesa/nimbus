@@ -1,7 +1,21 @@
 angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope, Accounts ) {
 
+  Accounts.getPersona($scope.ipfsHashHex).then(function(a){
+
+      $scope.$apply(function(){
+        $scope.apersona = a;
+        console.log("New persona: " + $scope.apersona.name);
+
+        var ipfsWeb = "104.131.53.68";
+        var ipfsWebPort = "8080";
+
+        $scope.imageSrc = "http://"+ipfsWeb+":"+ipfsWebPort+"/" + $scope.apersona.image.contentUrl;
+        //$scope.imageSrc = "http://104.131.53.68:8080/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk";
+
+      })
+    });
 
 })
 
@@ -54,19 +68,27 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 })
 
 .controller('AccountCtrl', function($scope, Accounts, _) {
+  console.log("Hello AccountCtrl")
 
-  $scope.theperson = "noone";
+  // ethereum address <-> ipfsHash -> json schema
 
-  $scope.settings = {
-    enableFriends: true
-  };
+  // generateNewAccount()
+  // 
 
-  console.log("hello AccountCtrl")
 
-  Accounts.newKey()
-  Accounts.test()
+  // Accounts.newKey()
+  // Accounts.test()
 
-  Accounts.newtest().then(function(a){console.log("ADFASFSDF!!!");$scope.apersona = JSON.stringify(a)})
+  $scope.setPersona = function(){
+    console.log("AccountCtrl.setPersona()")
+    Accounts.setPersona().then(function(a){
+      $scope.$apply(function(){
+        $scope.ipfsHashHex = a;
+        console.log("new ipfsHashHex: " + a)
+      })
+    })
+  },
+  
 
   $scope.signTx = function(){
     console.log("signTx()")
@@ -74,10 +96,22 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
   },
 
   $scope.getPersona = function(){
-    Accounts.getPersona().then(function(x){ console.log("XXXX: " + JSON.stringify(x)); $scope.theperson = x.value});
-    console.log("getPersona() returned")
-  }
+    console.log("AccountCtrl.getPersona()")
+    Accounts.getPersona($scope.ipfsHashHex).then(function(a){
 
+      $scope.$apply(function(){
+        $scope.apersona = a;
+        console.log("New persona: " + $scope.apersona.name);
+
+        var ipfsWeb = "104.131.53.68";
+        var ipfsWebPort = "8080";
+
+        $scope.imageSrc = "http://"+ipfsWeb+":"+ipfsWebPort+"/" + $scope.apersona.image.contentUrl;
+        //$scope.imageSrc = "http://104.131.53.68:8080/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk";
+
+      })
+    })
+  }
 })
 
 .controller('SettingsCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner) {

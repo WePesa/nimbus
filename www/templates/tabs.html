@@ -8,8 +8,8 @@ navigation history that also transitions its views in and out.
   <!-- Left menu -->
   <ion-side-menu side="left">
 
-    <div class="bar bar-header bar-light">
-      <h1 class="title">Overview</h1>
+    <div class="bar bar-header bar-dark">
+      <h1 class="title"><img src='img/blockapps.png'></img></h1>
     </div>
 
     <div class="list">
@@ -20,14 +20,14 @@ navigation history that also transitions its views in and out.
     </div>
 
     <div class="list">
-      <a class="item item-icon-right" href="#">
+      <a class="item item-icon-right" href="#/tab/account">
         <i class="icon ion-ios-person"></i>
         Switch accounts
       </a>
     </div>
 
     <div class="list">
-      <a class="item item-icon-right" href="#">
+      <a class="item item-icon-right" href="#/tab/settings">
         <i class="icon ion-lock-combination"></i>
         Security settings
       </a>
@@ -42,10 +42,10 @@ navigation history that also transitions its views in and out.
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
-    <ion-nav-bar class="bar-light">
+    <ion-nav-bar class="bar-calm">
       <ion-nav-buttons side="left">
        <!-- Toggle left side menu -->
-       <button menu-toggle="left" class="button button-icon icon ion-navicon-round"></button>
+       <button menu-toggle="left" class="button button-clear icon ion-navicon-round"></button>
       </ion-nav-buttons>
     </ion-nav-bar>
 
@@ -66,18 +66,19 @@ navigation history that also transitions its views in and out.
         <ion-nav-view name="tab-camera"></ion-nav-view>
       </ion-tab>
 
-      <!-- Settings Tab -->
-      <ion-tab title="Settings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/settings">
-        <ion-nav-view name="tab-settings"></ion-nav-view>
-      </ion-tab>
-
       <!-- Account Tab -->
       <ion-tab title="Account" icon-off="ion-ios-chat-outline" icon-on="ion-ios-chat" href="#/tab/account">
         <ion-nav-view name="tab-account"></ion-nav-view>
       </ion-tab>
 
+      <!-- Settings Tab -->
+      <ion-tab title="Settings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/settings">
+        <ion-nav-view name="tab-settings"></ion-nav-view>
+      </ion-tab>
+
+
 
     </ion-tabs>
+
   </ion-side-menu-content>
-
-
+</ion-side-menus>

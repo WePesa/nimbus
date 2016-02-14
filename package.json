@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "koan: a mobile ethereum riddle",
   "dependencies": {
+    "angular-bluebird-promises": "^1.0.1",
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",

@@ -1,28 +1,34 @@
 <ion-view view-title="Account overview">
   <ion-content class="padding">
+
+    <div class="list card">
+      <div class="item item-avatar">
+        <img src="{{imageSrc}}">
+        <h2>{{apersona.name}}</h2>
+      </div>
+      <div class="item item-body">
+        <div>
+          Your balance "account.balance"
+        </div>
+      </div>
+    </div>
+
     <div class="list card">
       <div class="item item-divider">Recent activity</div>
-      <div class="item item-body">
-        <div>
-         You sent 5989988 ETH
-        </div>
+        <div class="item item-body">
+          <div>
+            You sent "transaction.last.amount" ETH
+          </div>
       </div>
     </div>
+
     <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
+      <div class="item item-divider">Incoming transactions</div>
+        <div class="item item-body">
+          <div>
+            You have <b>1</b> incoming transaction(s).
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
-      </div>
     </div>
   </ion-content>
 </ion-view>
