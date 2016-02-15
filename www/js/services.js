@@ -96,7 +96,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
         angular.forEach(res.data, function(list) {
           var deferredItemList = $q.defer();
 
-          $http.get('http://testapi.blockapps.net/eth/v1.0/transaction?hash='+list.hash).then(function(res) {
+          $http.get(config.uri+"transaction?hash="+list.hash).then(function(res) {
 
             var returnedItems = res.data;
             combinedItems = combinedItems.concat(returnedItems);
@@ -110,7 +110,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
           deferredCombinedItems.resolve(combinedItems);
         });
         
-         return deferredCombinedItems.promise;
+        return deferredCombinedItems.promise;
 
       });
      }
@@ -325,11 +325,16 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
   }
 })
 
-var ipfs_ = angular.module('ipfs_',[])
-.factory('ipfs_', ['$window', function($window) {
-  console.log("everything: " + JSON.stringify(ipfs))
-  ipfs.setProvider({host: "104.131.53.68", port: 5001});
-  return ipfs; //
+var ipfs_ = angular.module('ipfs_',['config'])
+.factory('ipfs_', function(config) {
+  ipfs.setProvider({host: config.ipfsHost, port: config.ipfsPort});
+  console.log("IPFS host: " + config.ipfsHost+":"+config.ipfsPort)
+  return ipfs;
+});
+
+var lightwallet_ = angular.module('lightwallet_',[])
+.factory('lightwallet_', ['$window', function($window) {
+  return lightwallet; //
 }]);
 
 var underscore = angular.module('underscore',[])
@@ -340,21 +345,19 @@ var underscore = angular.module('underscore',[])
 var blockapps = angular.module('blockapps', ['config'])
 .factory('blockapps', ['$window', function($window) {
   var b = require('blockapps-js')
-  console.log("")
   b.query.serverURI = config.strato;
   return b;
-}]);
-
-var lightwallet_ = angular.module('lightwallet_', [])
-.factory('lightwallet_', ['$window', function($window) {
-  return $window.lightwallet; // assumes config has already been loaded on the page
+  //return $window.blockapps; // assumes blockapps has already been loaded on the page
 }]);
 
 var config = angular.module('config', [])
+// .factory('config', ['$window', function($window) {
+//   return $window.lightwallet; // assumes config has already been loaded on the page
+// }])
 .constant('config', {
-    strato: 'http://strato-dev2.blockapps.net',
-    uri: "http://strato-dev2.blockapps.net"+"/eth/v1.0",
-    ipfsHost : "http://104.131.53.68", //"http://104.236.65.136",
+    strato : "http://strato-dev2.blockapps.net",
+    uri: "http://strato-dev2.blockapps.net" + "/eth/v1.0",
+    ipfsHost : "104.131.53.68", //"http://104.236.65.136",
     ipfsPort : "5001",
     ipfsWebPort: "8080",
     personaRegistry: "d9ffec038375699cc76528f3b7fa5dd07e4ea4df"
