@@ -68,16 +68,14 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
 })
 
-.controller('AccountDetailCtrl', function($scope, $stateParams, Transactions, Accounts, config) {
-  console.log("hello AccountDetailCtrl()")
-  Accounts.getAccount($stateParams.accId).then(function(v){
-    console.log("FOUND ACCOUNT!: " + JSON.stringify(v));
-
-      $scope.$apply(function(){
-        $scope.editAccount = v;
-      })
-    
-  });
+.controller('TransactionsDetailCtrl', function($scope, $stateParams, Transactions) {
+  console.log("hello TransactionsDetailCtrl()")
+  Transactions.get($stateParams.txId).success(function(response){
+    $scope.transaction = response;
+    $scope.face = Transactions.face(response[0].hash)
+    $scope.faceTo = Transactions.face(response[0].to)
+    $scope.faceFrom = Transactions.face(response[0].from)
+  })
 
   $scope.ipfsURL = "http://"+config.ipfsHost+":"+config.ipfsWebPort;
 
@@ -107,6 +105,13 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
   $scope.toEdit = function(address) {
     console.log("AccountCtrl.toEdit("+address+")")
     $location.path("/tab/account/"+address); // path not hash
+  };
+
+  $scope.select = function(address){
+    console.log("AccountCtrl.select("+address+")")
+
+    Accounts.setCurrentAddress(address);
+
   };
 
   // ethereum address <-> ipfsHash -> json schema

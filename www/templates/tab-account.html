@@ -9,7 +9,7 @@
           can-swipe="true">
         <ion-item ng-repeat="item in allUsers"
                   class="item-remove-animate item-avatar item-icon-right item-light" 
-                  type="item-text-wrap" ng-click="" >
+                  type="item-text-wrap" ng-click="select(item.address)" >
 
           <img ng-src="{{ipfsURL + item.personaSchema.image.contentUrl}}">
           <h2>{{item.personaSchema.name}}</h2>
