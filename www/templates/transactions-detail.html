@@ -13,9 +13,11 @@
         Type: {{transaction[0].transactionType}}
       </div>
       <div class="item item-text-wrap">
-        From: {{transaction[0].from}}
+        From: {{transaction[0].from}} <img ng-src="{{faceFrom}}" style="width: 64px; height: 64px">
         <br>
-        To: {{transaction[0].to}}
+        To: {{transaction[0].to}} <img ng-src="{{faceTo}}" style="width: 64px; height: 64px">
+        <br>
+        Amount: {{transaction[0].value}} <b>WEI</b>
       </div>
       <div class="item item-divider">
         Block number: {{transaction[0].blockNumber}}
