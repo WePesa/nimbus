@@ -2,8 +2,9 @@
 
 ## Features
 
-+ [ ] wallet view
-  + [ ] latest transactions
++ [x] wallet view
+  + [x] latest transactions
+  + [x] inspect transactions
   + [ ] inspect addresses
 
 + [ ] Sign transactions on Strato node
