@@ -20,7 +20,6 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
     $scope.balance = res[0].balance;
   })
 
-  
   Transactions.all(Accounts.getCurrentAddress()).success(function(response){
     $scope.lastAmount = response[0].value;
     $scope.lastTo = response[0].to;
@@ -59,13 +58,6 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
       $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether").toPrecision(10)
       console.log("ETH: " + $scope.balance)
   })
-
-   // Chats.getNestedData().success(function(result) {
-   //    $scope.combinedItems = result;
-   //    console.log(JSON.stringify(result))
-   // });
-
-
 })
 
 .controller('TransactionsDetailCtrl', function($scope, $stateParams, Transactions) {
@@ -90,16 +82,17 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
 })
 
-.controller('AccountCtrl', function($scope, $location, Accounts, _) {
+.controller('AccountCtrl', function($scope, $location, Accounts, _, lw) {
   console.log("Hello AccountCtrl")
 
   Accounts.getAllAccounts().then(function(v){
-
       $scope.$apply(function(){
         $scope.allUsers = v;
       })
 
   });
+
+  $scope.ipfsURL = lw.ipfsHost+":"+lw.ipfsWebPort
 
   $scope.isSelectedClass = function(item){
     console.log("isSelected()")
@@ -117,13 +110,6 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
   // ethereum address <-> ipfsHash -> json schema
 
-  // generateNewAccount()
-  // 
-
-
-  // Accounts.newKey()
-  // Accounts.test()
-
   $scope.setPersona = function(){
     console.log("AccountCtrl.setPersona()")
     Accounts.setPersona().then(function(a){
@@ -133,7 +119,6 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
       })
     })
   },
-  
 
   $scope.signTx = function(){
     console.log("signTx()")

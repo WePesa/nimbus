@@ -11,20 +11,23 @@
                   class="item-remove-animate item-avatar item-icon-right item-light" 
                   type="item-text-wrap" ng-click="" >
 
-          <img ng-src="img/adam.jpg">
+          <img ng-src="{{ipfsURL + item.personaSchema.image.contentUrl}}">
+
           <h2>{{item.personaSchema.name}}</h2>
-          <p>A description</p>
+          <p></p>
           <ion-option-button class="button-info"  ng-click="toEdit(item.address)">
             Edit
           </ion-option-button>
+          <i class="icon item-icon-left ion-chevron-right icon-accessory"></i>
         </ion-item>
 
-        <div class="item item-divider">
+<!--         <div class="item item-divider">
           New User
-        </div>
+        </div> -->
 
-        <ion-item class="item-remove-animate item-avatar item-icon-right item-stable" type="item-text-wrap" href="#/tab/account/0">
-          <img ng-src="img/blockapps.png">
+        <ion-item class="item-remove-animate item-icon-left item-avatar item-icon-right item-stable" type="item-text-wrap" href="#/tab/account/0">
+          
+          <i class="icon  ion-plus"></i>
           <h2>New User</h2>
           <p>Create a new persona</p>
           <i class="icon ion-chevron-right icon-accessory"></i>

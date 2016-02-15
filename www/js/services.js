@@ -58,13 +58,6 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
 
 .factory('Transactions', function ($http, $rootScope, $stateParams, $q, lw) {
 
-  //var baseUri = 'http://genpact.centralus.cloudapp.azure.com/eth/v1.0'
-
-  //var myaddress = 'e1fd0d4a52b75a694de8b55528ad48e2e2cf7859'
-  //var myaddress1 = '903b4a914940f08399e41dddcab8e1ea8939cbab'
-
-  //var myaddress = '9d551f41fed6fc27b719777c224dfecce170004d'
-
   return {
 
     all: function (address) {
@@ -140,10 +133,10 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
     address : "903b4a914940f08399e41dddcab8e1ea8939cbab",
     privkey : "e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d",
     personaSchema :  {
-        'name': "Johann Sebastian Bach",
+        'name': "Jesus",
         'image': {'@type': 'ImageObject',
               'name': 'avatar',
-              'contentUrl' : '/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk'}
+              'contentUrl' : '/ipfs/QmW95EqBGLCkbW6nTPcEkDL4MtsnzkHgrxj8KRwTMDyaRR'}
     }
   }
   var p2 = {
@@ -153,7 +146,7 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
         'name': "Johann Sebastian Bach",
         'image': {'@type': 'ImageObject',
               'name': 'avatar',
-              'contentUrl' : '/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk'}
+              'contentUrl' : '/ipfs/QmZjQqCfkVtxjx5yNvvEKFEnTNnz2zsuJCyZuZgPpUPW5D'}
     }
   }
 
@@ -195,7 +188,7 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
     },
 
     setPersona : function(){
-      console.log("setPersona()")
+      console.log("Accounts.setPersona()")
 
       return new Promise( function(accept, reject){
 
@@ -226,135 +219,50 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
     },
 
     getPersona : function(){
-      console.log("getPersona()");
+      console.log("Accounts.getPersona()");
 
-      //console.log("Contract: " + JSON.stringify(contract))
+      // this works
+      (contract.state.numPersonas).then(function(v){
+            console.log("hello blockapps")
+            console.log("this in contract: " + v.toString())
+          })
 
-      return new Promise( function(accept, reject){
+      // this doesn't
+      // (contract.state.ipfsAttributeLookup("903b4a914940f08399e41dddcab8e1ea8939cbab")).then(function(v){
+      //       console.log("hello blockapps")
+      //       console.log("this in contract: " + v.toString())
+      //     })
 
-
-
-        //blockapps.routes.storageAddress("d9ffec038375699cc76528f3b7fa5dd07e4ea4df").then(function(res){
-        // blockapps.routes.storage({ address: "d9ffec038375699cc76528f3b7fa5dd07e4ea4df"
-         //                         , keyhex: hex_address}).then(function(res){
-
-          //                console.log("new look: " + JSON.stringify(res))
-
-
-        // console.log("What is the contract? :" + JSON.stringify(contract))
-        // console.log("What is state? :" + Object.getOwnPropertyNames(contract.state))
-        // Promise.props(contract.state.personas).then(function (s) {
-        //     console.log(s);
-        // });
-
-        // but this works too! cheers ryan
-        // (contract.state.ipfsAttributeLookup(pub_address)).then(function (s) {
-        //     console.log("Keylookup!: " + JSON.stringify(s));//s.owner.toString());
-        // });
-
-        // return new Promise( function(accept, reject){
-        //   contract.state.personas.then(function (s) {
-        //       accept(s);
-        //   });
-        // });
-
-
-        // console.log("personas: " + contract.state.personas)
-
-        // contract.state.personas.then(function(a){
-
-        //   console.log("hello:  "+ a)
-        // })
-
-        //contract.call("newContract", privKey).then(function(x) {contractObj = x}).then(alert("Done"))
-// After alert
-
-          // console.log("lookup?")
-          // contract.state.ipfsAttributeLookup(hex_address).then(function(v){
-          //     console.log("lookup: " + v)
-          // })
-
-          //console.log(JSON.stringify(res))
-
-          var ipfsHashHex =  "12204919b9cf05c5ee5c5b6b87d4ee54ea9600a9e9f7c9e18f18566d233324eaafe2";//res[0].value;
-          console.log("ipfsHashHex: " + ipfsHashHex)
-          console.log(ipfsHashHex.slice(2))
-          var ipfsHash = ipfs.utils.hexToBase58(ipfsHashHex.slice(2));
-          console.log("ipfsHash: " + ipfsHash)
-          ipfs_.catJson("QmTG1DvAFYHPBgkBr92BQGKfTQTg17V3tC9PMs4kvqsVff", function(err, personaObj) {
-
-            console.log("personaObj: " + JSON.stringify(personaObj))
-          
-            if (err !== null) { reject(err); return; }
-            accept(personaObj);
-          
-          });
-
-       // })
-      });
-
-    },
-
-    getPersona_s : function(){
+      // this doesn't work either :/
+      // contract.state
+      //   .getPersonaAttributes("903b4a914940f08399e41dddcab8e1ea8939cbab")
+      //   .callFrom("e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d")
+      //   .then(function(v){
+      //     console.log("value: " + v)
+      //   })
 
       return new Promise( function(accept, reject){
 
-        var personaInfo = {
-          name: "Kristoffer",
-          info: "blah"
-        }
+        //console.log("What is the contract? :" + JSON.stringify(contract))
+        //console.log("What is state? :" + Object.getOwnPropertyNames(contract.state))
 
-        // put attrib
-        ipfs_.addJson(personaInfo, function(err, ipfsHash) {
-          console.log("ipfshash: " + ipfsHash);
+        var ipfsHashHex =  "12204919b9cf05c5ee5c5b6b87d4ee54ea9600a9e9f7c9e18f18566d233324eaafe2";//res[0].value;
+        console.log("ipfsHashHex: " + ipfsHashHex)
+        console.log(ipfsHashHex.slice(2))
+        var ipfsHash = ipfs.utils.hexToBase58(ipfsHashHex.slice(2));
+        console.log("ipfsHash: " + ipfsHash)
+        ipfs_.catJson("QmTG1DvAFYHPBgkBr92BQGKfTQTg17V3tC9PMs4kvqsVff", function(err, personaObj) {
 
-           // get attrib
-           ipfs_.catJson(ipfsHash,function (err, personaObj)  {
-              
-              if (err !== null) { reject(err); return; }
-              console.log("person: " + JSON.stringify(personaObj));
-              accept(personaObj);
-            });
-
+          console.log("personaObj: " + JSON.stringify(personaObj))
+        
+          if (err !== null) { reject(err); return; }
+          accept(personaObj);
+        
         });
-      })
-
-    },
-
-    getPersona_old : function(){
-      console.log("getPersona()")
-
-      // return blockapps.routes.storage({ key: "c7f6cd8f951298227792595b4b23551f3b6ccae71f0d99fba2f4a76864ea1f15"
-      //                           , address: "c367f2e2501aa0dd4f6e6eec7f993eb14d8bb464"});
-
-      return new Promise( function(accept, reject){
-
-        blockapps.routes.storageAddress("c367f2e2501aa0dd4f6e6eec7f993eb14d8bb464").then(function(res){
-
-          console.log("res: " + JSON.stringify(res))
-
-          var ipfsHashHex = res.value;
-
-          console.log("ipfs: " + JSON.stringify(ipfs))
-
-          var ipfsHash = ipfs.utils.hexToBase58(ipfsHashHex.slice(2));
-          ipfs.catJson(ipfsHash, function(err, personaObj) {
-
-            console.log("personaObj: " + JSON.stringify(personaObj))
-          
-            if (err !== null) { reject(err); return; }
-            accept(personaObj);
-          
-          });
-
-        })
       });
-
     },
 
     signTx : function(hash) {
-      console.log("hello contract: " + JSON.stringify(contract))
-
       contract.state["setPersonaAttributes"].apply(null,["98765432"]).txParams({
         value : Units.ethValue(1000000000).in("wei")
       }).callFrom(privkey).then(function(r){console.log("afterTX: " + r)}).catch(function (err) { console.log("err: " + err); });
