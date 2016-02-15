@@ -1,43 +1,39 @@
-<ion-view view-title="Account">
+<ion-view view-title="Accounts">
   <ion-content>
 
-    <ion-scroll style="height: 500px"> <!--FIXME dynamic -->
-      <ion-list>
-        <div class="item item-divider">
-          Existing users
-        </div>
-        <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="x in allUsers" type="item-text-wrap" href="#/tab/account/{{x}}">
-          <img ng-src="img/adam.jpg">
-          <h2>{{x}}</h2>
-          <p>{{x}}</p>
-          <i class="icon ion-chevron-right icon-accessory"></i>
+      <ion-scroll style="height: 700px"> <!--FIXME dynamic -->
 
-          some_object_array
-          some_grouped_map
+      <ion-list 
+          show-delete="false"
+          show-reorder="false"
+          can-swipe="true">
+        <ion-item ng-repeat="item in allUsers"
+                  class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" ng-click="">
+
+          <img ng-src="img/adam.jpg">
+          <h2>{{item.personaSchema.name}}</h2>
+          <p>A description</p>
+          <ion-option-button class="button-info"  ng-click="toEdit(item.address)">
+            Edit
           </ion-option-button>
         </ion-item>
 
         <div class="item item-divider">
-          Create a new user
+          New User
         </div>
 
-        <ion-item class="item-remove-animate item-avatar item-icon-right item-stable" type="item-text-wrap">
+        <ion-item class="item-remove-animate item-avatar item-icon-right item-stable" type="item-text-wrap" href="#/tab/account/0">
           <img ng-src="img/blockapps.png">
           <h2>New User</h2>
           <p>Create a new persona</p>
           <i class="icon ion-chevron-right icon-accessory"></i>
 
-          some_object_array
-          some_grouped_map
           </ion-option-button>
         </ion-item>
-      </ion-list>
-    </ion-scroll>
 
-    <div class="button-bar bar-footer">
-      <a class="button button-stable" ng-click="setPersona()">Write IPFS</a>
-      <a class="button button-stable" ng-click="getPersona()">Read IPFS</a>
-    </div>
+      </ion-list>
+      
+    </ion-scroll>
 
   </ion-content>
 </ion-view>

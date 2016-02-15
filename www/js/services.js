@@ -62,6 +62,7 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
   var baseUri = 'http://genpact.centralus.cloudapp.azure.com/eth/v1.0'
 
   var myaddress = 'e1fd0d4a52b75a694de8b55528ad48e2e2cf7859'
+  var myaddress1 = '903b4a914940f08399e41dddcab8e1ea8939cbab'
 
   //var myaddress = '9d551f41fed6fc27b719777c224dfecce170004d'
 
@@ -82,7 +83,8 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
      },
 
      balance: function(account){
-      return $http.get(baseUri + '/account?address='+myaddress)
+      console.log("Transactions.balance("+account+")")
+      return $http.get(baseUri + '/account?address='+account)
      },
 
      getNestedData: function() {
@@ -130,19 +132,28 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
   //   }
   // }
 
-  var thePerson = {
-    'name': "Johann Sebastian Bach",
-    'image': {'@type': 'ImageObject',
+  var p1 = {
+    address : "903b4a914940f08399e41dddcab8e1ea8939cbab",
+    privkey : "e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d",
+    personaSchema :  {
+        'name': "Johann Sebastian Bach",
+        'image': {'@type': 'ImageObject',
               'name': 'avatar',
               'contentUrl' : '/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk'}
-  };
+    }
+  }
+  var p2 = {
+    address : "903b4a914940f08399e41dddcab8e1ea8939cbab",
+    privkey : "e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d",
+    personaSchema :  {
+        'name': "Johann Sebastian Bach",
+        'image': {'@type': 'ImageObject',
+              'name': 'avatar',
+              'contentUrl' : '/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk'}
+    }
+  }
 
-  var thePerson2 = {
-    'name': "Mr x",
-    'image': {'@type': 'ImageObject',
-              'name': 'avatar',
-              'contentUrl' : '/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk'}
-  };
+  var ps = [p1,p2]
 
   var privkey = "e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d";
   var pub_address = "903b4a914940f08399e41dddcab8e1ea8939cbab";
@@ -176,11 +187,25 @@ angular.module('starter.services', ['underscore', 'lw', 'ngCordova', 'blockapps'
 
   return {
 
+    getCurrentAddress : function(){
+      console.log("Accounts.getCurrentAddress() = " + ps[0].address)
+      return ps[0].address;
+    },
+
+    getAccount : function(address){
+
+      return new Promise(function(accept, reject){
+
+        accept(_.find(ps, function(v){ return v.address == address}));
+      
+      })
+    },
+
     getAllAccounts : function(){
 
       return new Promise(function(accept, reject){
 
-        accept(1);
+        accept(ps);
 
       })
 

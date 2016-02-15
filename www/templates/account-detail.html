@@ -4,28 +4,21 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{transaction.name}}">
+<ion-view view-title="{{editAccount.personaSchema.name}}">
   <ion-content class="padding">
-    <img ng-src="{{face}}" style="width: 64px; height: 64px">
+    <img ng-src="img/adam.jpg" style="width: 64px; height: 64px">
 
-    <div class="card">
-      <div class="item item-divider">
-        Type: {{transaction[0].transactionType}}
-      </div>
-      <div class="item item-text-wrap">
-        From: {{transaction[0].from}}
-        <br>
-        To: {{transaction[0].to}}
-      </div>
-      <div class="item item-divider">
-        Block number: {{transaction[0].blockNumber}}
-      </div>
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Name">
+      </label>
+      <label class="item item-input">
+        <textarea placeholder="Comments"></textarea>
+      </label>
+    </div>
 
-      <img ng=src="{{barcode}}" style="width: 128px; height: 128px">
-
-      <div class="item item-divider">
+    <div class="item item-divider">
         <a href="#/tab/account">Go back</a>
-      </div>
     </div>
 
     <div class="button-bar bar-footer">

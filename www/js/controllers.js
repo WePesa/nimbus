@@ -19,7 +19,7 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
 })
 
-.controller('TransactionsCtrl', function($scope, Transactions, _, blockapps) {
+.controller('TransactionsCtrl', function($scope, Transactions, _, blockapps, Accounts) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -43,7 +43,7 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
     });
   })
 
-  Transactions.balance('bla').success(function(response){
+  Transactions.balance(Accounts.getCurrentAddress()).success(function(response){
     console.log('balance response: ' + JSON.stringify(response))
       $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether").toPrecision(10)
       console.log("ETH: " + $scope.balance)
@@ -68,22 +68,32 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
 .controller('AccountDetailCtrl', function($scope, $stateParams, Transactions, Accounts) {
   console.log("hello AccountDetailCtrl()")
-  Transactions.get($stateParams.txId).success(function(response){
-    //$scope.transaction = response;
-    //$scope.face = Transactions.face(response[0].hash)
-  })
+  Accounts.getAccount($stateParams.accId).then(function(v){
+    console.log("FOUND ACCOUNT!: " + JSON.stringify(v));
+
+      $scope.$apply(function(){
+        $scope.editAccount = v;
+      })
+    
+  });
 
 })
 
-.controller('AccountCtrl', function($scope, Accounts, _) {
+.controller('AccountCtrl', function($scope, $location, Accounts, _) {
   console.log("Hello AccountCtrl")
 
   Accounts.getAllAccounts().then(function(v){
 
-    $scope.allUsers = ["MrX", "MrY", "MrZ"];
+      $scope.$apply(function(){
+        $scope.allUsers = v;
+      })
 
   });
 
+  $scope.toEdit = function(address) {
+    console.log("AccountCtrl.toEdit("+address+")")
+    $location.path("/tab/account/"+address); // path not hash
+  };
 
   // ethereum address <-> ipfsHash -> json schema
 
