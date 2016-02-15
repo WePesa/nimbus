@@ -1,61 +1,62 @@
 angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
 .controller('DashCtrl', function($scope, Accounts, config, Transactions) {
-  console.log("DashCtrl()")
 
-  Accounts.getPersona(Accounts.getCurrentAddress()).then(function(a){
+  $scope.$on('$ionicView.enter', function(e) {
 
-      $scope.$apply(function(){
-        $scope.apersona = a;
-        console.log("New persona: " + $scope.apersona.name);
+    console.log("DashCtrl()")
 
-        $scope.imageSrc = "http://"+config.ipfsHost+":"+config.ipfsWebPort+ $scope.apersona.image.contentUrl;
-        console.log($scope.imageSrc)
+    Accounts.getPersona(Accounts.getCurrentAddress()).then(function(a){
 
-      })
-    });
+        $scope.$apply(function(){
+          $scope.apersona = a;
+          console.log("New persona: " + $scope.apersona.name);
 
-  Accounts.balance().success(function(res){
-    $scope.balance = res[0].balance;
-  })
+          $scope.imageSrc = "http://"+config.ipfsHost+":"+config.ipfsWebPort+ $scope.apersona.image.contentUrl;
+          console.log($scope.imageSrc)
 
-  Transactions.all(Accounts.getCurrentAddress()).success(function(response){
-    $scope.lastAmount = response[0].value;
-    $scope.lastTo = response[0].to;
-  })
+        })
+      });
 
-  $scope.incomingTx = []
+    Accounts.balance().success(function(res){
+      $scope.balance = res[0].balance;
+    })
+
+    Transactions.all(Accounts.getCurrentAddress()).success(function(response){
+      $scope.lastAmount = response[0].value;
+      $scope.lastTo = response[0].to;
+    })
+
+    $scope.incomingTx = []
+
+  });
 
 })
 
 .controller('TransactionsCtrl', function($scope, Transactions, _, blockapps, Accounts) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
 
-  Transactions.all(Accounts.getCurrentAddress()).success(function(response){
-    console.log("TransactionsCtrl.all()") 
+  $scope.$on('$ionicView.enter', function(e) {
 
-    $scope.c2fmap2 = _.object(response, response.map(function(x){return Transactions.face(x.hash)}))
-    $scope.transactions = response;
-    $scope.faces = response.map(function(x){return Transactions.face(x.hash)})
+    Transactions.all(Accounts.getCurrentAddress()).success(function(response){
+      console.log("TransactionsCtrl.all()") 
 
-    $scope.c2fmap = response.map(function(value, index) {
-      return {
-          data: value,
-          value: $scope.faces[index]
-      }
-    });
-  })
+      $scope.c2fmap2 = _.object(response, response.map(function(x){return Transactions.face(x.hash)}))
+      $scope.transactions = response;
+      $scope.faces = response.map(function(x){return Transactions.face(x.hash)})
 
-  Transactions.balance(Accounts.getCurrentAddress()).success(function(response){
-    console.log('balance response: ' + JSON.stringify(response))
-      $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether").toPrecision(10)
-      console.log("ETH: " + $scope.balance)
+      $scope.c2fmap = response.map(function(value, index) {
+        return {
+            data: value,
+            value: $scope.faces[index]
+        }
+      });
+    })
+
+    Transactions.balance(Accounts.getCurrentAddress()).success(function(response){
+      console.log('balance response: ' + JSON.stringify(response))
+        $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether").toPrecision(10)
+        console.log("ETH: " + $scope.balance)
+    })
   })
 })
 
