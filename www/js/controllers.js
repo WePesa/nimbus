@@ -1,17 +1,16 @@
-angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
+angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
-.controller('DashCtrl', function($scope, Accounts, lw, Transactions) {
+.controller('DashCtrl', function($scope, Accounts, config, Transactions) {
   console.log("DashCtrl()")
 
-  Accounts.getPersona($scope.ipfsHashHex).then(function(a){
+  Accounts.getPersona(Account.getCurrentAddress()).then(function(a){
 
       $scope.$apply(function(){
         $scope.apersona = a;
         console.log("New persona: " + $scope.apersona.name);
 
-        $scope.imageSrc = lw.ipfsHost+":"+lw.ipfsWebPort+ $scope.apersona.image.contentUrl;
+        $scope.imageSrc = config.ipfsHost+":"+config.ipfsWebPort+ $scope.apersona.image.contentUrl;
         console.log($scope.imageSrc)
-        //$scope.imageSrc = "http://104.131.53.68:8080/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk";
 
       })
     });
@@ -82,7 +81,7 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
 })
 
-.controller('AccountCtrl', function($scope, $location, Accounts, _, lw) {
+.controller('AccountCtrl', function($scope, $location, Accounts, _, config) {
   console.log("Hello AccountCtrl")
 
   Accounts.getAllAccounts().then(function(v){
@@ -92,7 +91,7 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
   });
 
-  $scope.ipfsURL = lw.ipfsHost+":"+lw.ipfsWebPort
+  $scope.ipfsURL = config.ipfsHost+":"+config.ipfsWebPort
 
   $scope.isSelectedClass = function(item){
     console.log("isSelected()")
