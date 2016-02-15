@@ -8,7 +8,8 @@
           show-reorder="false"
           can-swipe="true">
         <ion-item ng-repeat="item in allUsers"
-                  class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" ng-click="">
+                  class="item-remove-animate item-avatar item-icon-right item-light" 
+                  type="item-text-wrap" ng-click="" >
 
           <img ng-src="img/adam.jpg">
           <h2>{{item.personaSchema.name}}</h2>
@@ -32,7 +33,7 @@
         </ion-item>
 
       </ion-list>
-      
+
     </ion-scroll>
 
   </ion-content>

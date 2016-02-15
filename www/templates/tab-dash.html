@@ -8,7 +8,7 @@
       </div>
       <div class="item item-body">
         <div>
-          Your balance "account.balance"
+          Your balance is {{balance}} <b>WEI</b>
         </div>
       </div>
     </div>
@@ -17,7 +17,7 @@
       <div class="item item-divider">Recent activity</div>
         <div class="item item-body">
           <div>
-            You sent "transaction.last.amount" ETH
+            You sent {{lastAmount}} <b>WEI</b> to {{lastTo}}
           </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
       <div class="item item-divider">Incoming transactions</div>
         <div class="item item-body">
           <div>
-            You have <b>1</b> incoming transaction(s).
+            You have <b>{{incomingTx.length}}</b> incoming transaction(s).
           </div>
         </div>
     </div>

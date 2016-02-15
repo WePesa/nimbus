@@ -1,6 +1,7 @@
 angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
 
-.controller('DashCtrl', function($scope, Accounts ) {
+.controller('DashCtrl', function($scope, Accounts, lw, Transactions) {
+  console.log("DashCtrl()")
 
   Accounts.getPersona($scope.ipfsHashHex).then(function(a){
 
@@ -8,14 +9,24 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
         $scope.apersona = a;
         console.log("New persona: " + $scope.apersona.name);
 
-        var ipfsWeb = "104.131.53.68";
-        var ipfsWebPort = "8080";
-
-        $scope.imageSrc = "http://"+ipfsWeb+":"+ipfsWebPort+"/" + $scope.apersona.image.contentUrl;
+        $scope.imageSrc = lw.ipfsHost+":"+lw.ipfsWebPort+ $scope.apersona.image.contentUrl;
+        console.log($scope.imageSrc)
         //$scope.imageSrc = "http://104.131.53.68:8080/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk";
 
       })
     });
+
+  Accounts.balance().success(function(res){
+    $scope.balance = res[0].balance;
+  })
+
+  
+  Transactions.all(Accounts.getCurrentAddress()).success(function(response){
+    $scope.lastAmount = response[0].value;
+    $scope.lastTo = response[0].to;
+  })
+
+  $scope.incomingTx = []
 
 })
 
@@ -28,8 +39,8 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  Transactions.all().success(function(response){
-    console.log("hello Transactios.all()") 
+  Transactions.all(Accounts.getCurrentAddress()).success(function(response){
+    console.log("TransactionsCtrl.all()") 
 
     $scope.c2fmap2 = _.object(response, response.map(function(x){return Transactions.face(x.hash)}))
     $scope.transactions = response;
@@ -89,6 +100,15 @@ angular.module('starter.controllers', ['underscore', 'lw', 'blockapps'])
       })
 
   });
+
+  $scope.isSelectedClass = function(item){
+    console.log("isSelected()")
+    if(item.address === Accounts.getCurrentAddress()){
+      return "item-remove-animate item-avatar item-icon-right item-calm";
+    } else {
+      return "item-remove-animate item-avatar item-icon-right item-light";
+    }
+  };
 
   $scope.toEdit = function(address) {
     console.log("AccountCtrl.toEdit("+address+")")
