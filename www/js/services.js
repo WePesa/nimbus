@@ -200,7 +200,6 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
               .then(function(r){console.log("afterTX: " + r)})
               .catch(function (err) { console.log("err: " + err); 
             });
-
           })
 
     } else { 
