@@ -14,7 +14,7 @@
           <img ng-src="{{ipfsURL + item.personaSchema.image.contentUrl}}">
           <h2>{{item.personaSchema.name}}</h2>
           <p></p>
-          <ion-option-button class="button-info"  ng-click="toEdit(item.address)">
+          <ion-option-button class="button-info"  ng-click="select(item.address); toEdit(item.address)">
             Edit
           </ion-option-button>
           <i class="icon item-icon-left ion-chevron-right icon-accessory"></i>

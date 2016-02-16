@@ -4,23 +4,24 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{editAccount.personaSchema.name}}">
+<ion-view view-title="{{persona.name}}">
   <ion-content class="padding">
-    <img ng-src="{{ipfsURL + editAccount.personaSchema.image.contentUrl}}" style="width: 64px; height: 64px">
+    <img ng-src="{{ipfsURL + persona.image.contentUrl}}" style="width: 64px; height: 64px">
 
     <div class="list">
-      <label class="item item-input">
-        <input type="text" placeholder="Name">
+
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Name</span>
+        <input type="text" placeholder="{{persona.name}}" ng-model="newPersona.name">
       </label>
     </div>
-
     <div class="item item-divider">
         <a href="#/tab/account">Go back</a>
     </div>
 
     <div class="button-bar bar-footer">
-      <a class="button button-balanced" ng-click="setPersona()">Update Persona</a>
-      <a class="button button-assertive" ng-click="getPersona()">Clear Persona</a>
+      <a class="button button-balanced" ng-click="upsertPersona(newPersona.name)">Update Persona</a>
+      <a class="button button-assertive" ng-submit="getPersona()">Clear Persona</a>
     </div>
 
   </ion-content>

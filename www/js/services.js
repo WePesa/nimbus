@@ -127,7 +127,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
         'image': {'@type': 'ImageObject',
               'name': 'avatar',
               'contentUrl' : '/ipfs/QmW95EqBGLCkbW6nTPcEkDL4MtsnzkHgrxj8KRwTMDyaRR'}
-        },
+    },
     ipfshash : "00000"
   }
   var p2 = {
@@ -138,7 +138,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
         'image': {'@type': 'ImageObject',
               'name': 'avatar',
               'contentUrl' : '/ipfs/QmZjQqCfkVtxjx5yNvvEKFEnTNnz2zsuJCyZuZgPpUPW5D'}
-        },
+    },
     ipfshash : "11111"
   }
 
@@ -155,9 +155,70 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
   };
 
   var setCurrentAddress = function(address){
-
     _currentAddress = address;
+  };
 
+  var upsertPersona = function(newname){
+
+    var address = getCurrentAddress();
+
+    var val = _.find(ps, function(v){
+      return v.address === address;
+    });
+
+    var newPersona;
+    var persona;
+
+    if(val !== null){
+      console.log("updating...: " + newname)
+
+      persona = {
+          name: newname,
+          image: val.personaSchema.image
+        };
+
+      ipfs_.addJson(persona, function(err, ipfsHash) {
+            console.log("new ipfsHash: " + ipfsHash);
+
+            newPersona = {
+              address : address,
+              privkey : val.personaSchema.privkey,
+              personaSchema : persona,
+              ipfshash : ipfsHash
+            }
+
+            _.extend(_.findWhere(ps, { address: newPersona.address }), newPersona);
+
+            console.log(JSON.stringify(ps))
+
+            var ipfsHashHex = ipfs_.utils.base58ToHex(ipfsHash);
+            console.log("new ipfsHashHex: " + ipfsHashHex);
+
+            contract.state["setPersonaAttributes"].apply(null,[ipfsHashHex]).txParams({
+              value : blockapps.ethbase.Units.ethValue(1000000000).in("wei")
+              }).callFrom(val.privkey)
+              .then(function(r){console.log("afterTX: " + r)})
+              .catch(function (err) { console.log("err: " + err); 
+            });
+
+          })
+
+    } else { 
+      console.log("inserting...")
+
+      newPersona = {
+        address : address,
+        privkey : "xxxxxxx",
+        personaSchema : {
+          name: name,
+          image: {'@type': 'ImageObject',
+                'name': 'avatar',
+                'contentUrl' : '/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk'}
+        },
+        ipfshash : "1111"
+      }
+
+    }
   };
 
   return {
@@ -165,6 +226,8 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
     getCurrentAddress,
 
     setCurrentAddress,
+
+    upsertPersona,
 
     getAccount : function(address){
       return new Promise(function(accept, reject){

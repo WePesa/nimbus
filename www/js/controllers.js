@@ -117,38 +117,40 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
   // ethereum address <-> ipfsHash -> json schema
 
-  $scope.setPersona = function(){
-    console.log("AccountCtrl.setPersona()")
-    Accounts.setPersona().then(function(a){
-      $scope.$apply(function(){
-        $scope.ipfsHashHex = a;
-        console.log("new ipfsHashHex: " + a)
-      })
-    })
-  },
 
   $scope.signTx = function(){
     console.log("signTx()")
     Accounts.signTx("0x666666");
-  },
+  };
 
-  $scope.getPersona = function(){
-    console.log("AccountCtrl.getPersona()")
-    Accounts.getPersona($scope.ipfsHashHex).then(function(a){
+})
 
+.controller('AccountDetailCtrl', function($scope, $stateParams, Transactions, Accounts, config) {
+  console.log("hello AccountDetailCtrl()")
+
+  Accounts.getPersona($stateParams.accId).then(function(v){
       $scope.$apply(function(){
-        $scope.apersona = a;
-        console.log("New persona: " + $scope.apersona.name);
-
-        var ipfsWeb = "104.131.53.68";
-        var ipfsWebPort = "8080";
-
-        $scope.imageSrc = "http://"+ipfsWeb+":"+ipfsWebPort+"/" + $scope.apersona.image.contentUrl;
-        //$scope.imageSrc = "http://104.131.53.68:8080/ipfs/QmUSBKeGYPmeHmLDAEHknAm5mFEvPhy2ekJc6sJwtrQ6nk";
-
+        $scope.persona = v;
       })
-    })
-  }
+  });
+
+  $scope.ipfsURL = "http://"+config.ipfsHost+":"+config.ipfsWebPort;
+
+  $scope.upsertPersona = function(newName){
+    console.log("AccountDetailCtrl.upsertPersona()")
+
+    console.log("New name is: " + newName)
+
+    Accounts.upsertPersona(newName);
+    //.then(function(a){
+    //  console.log("did upsert")
+      // $scope.$apply(function(){
+      //   $scope.ipfsHashHex = a;
+      //   console.log("new ipfsHashHex: " + a)
+      // })
+    //})
+  };
+
 })
 
 .controller('SettingsCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner) {
@@ -190,8 +192,6 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
       console.log("wtf: "+$scope.address)
       alert("wtf: " + $scope.address)
     })
-
-
   }
 
 });
