@@ -222,11 +222,11 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
   return {
 
-    getCurrentAddress,
+    getCurrentAddress : getCurrentAddress,
 
-    setCurrentAddress,
+    setCurrentAddress : setCurrentAddress,
 
-    upsertPersona,
+    upsertPersona : upsertPersona,
 
     getAccount : function(address){
       return new Promise(function(accept, reject){
