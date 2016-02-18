@@ -162,19 +162,22 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
     var address = getCurrentAddress();
 
-    var val = _.find(ps, function(v){
+    var val_ = _.find(ps, function(v){
       return v.address === address;
     });
 
     var newPersona;
     var persona;
 
-    if(val !== null){
+    if(val_ !== null){
+
+      console.log("val: " + JSON.stringify(val_))
       console.log("updating...: " + newname)
+      console.log("private key: " + val_.privkey)
 
       persona = {
           name: newname,
-          image: val.personaSchema.image
+          image: val_.personaSchema.image
         };
 
       ipfs_.addJson(persona, function(err, ipfsHash) {
@@ -182,7 +185,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
             newPersona = {
               address : address,
-              privkey : val.personaSchema.privkey,
+              privkey : val_.privkey,
               personaSchema : persona,
               ipfshash : ipfsHash
             }
@@ -194,9 +197,11 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
             var ipfsHashHex = ipfs_.utils.base58ToHex(ipfsHash);
             console.log("new ipfsHashHex: " + ipfsHashHex);
 
+            console.log("privkey: " + val_.privkey)
+
             contract.state["setPersonaAttributes"].apply(null,[ipfsHashHex]).txParams({
               value : blockapps.ethbase.Units.ethValue(1000000000).in("wei")
-              }).callFrom(val.privkey)
+              }).callFrom(val_.privkey)
               .then(function(r){console.log("afterTX: " + r)})
               .catch(function (err) { console.log("err: " + err); 
             });
@@ -219,7 +224,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
     }
   };
-
+ 
   return {
 
     getCurrentAddress : getCurrentAddress,
@@ -279,6 +284,30 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
     getPersona : function(address){
       console.log("Accounts.getPersona()");
+
+      // contract.state.personas.then(function (s) {
+      //     console.log(s);
+      // });
+
+      // // this works
+      // (contract.state.numPersonas).then(function(v){
+      //       console.log("hello blockapps")
+      //       console.log("this in contract: " + v.toString())
+      //     });
+
+      // // this doesn't
+      (contract.state.ipfsAttributeLookup("903b4a914940f08399e41dddcab8e1ea8939cbab")).then(function(s){
+            console.log("hello blockapps too")
+            console.log("Keylookup!: " + s.owner.toString());
+          });
+
+      // this doesn't work either :/
+      // contract.state
+      //   .getPersonaAttributes("903b4a914940f08399e41dddcab8e1ea8939cbab")
+      //   .callFrom("e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d")
+      //   .then(function(v){
+      //     console.log("value: " + v)
+      //   })
 
       return new Promise( function(accept, reject){
 
@@ -427,6 +456,7 @@ var config = angular.module('config', [])
 .constant('config', {
     strato : "http://strato-dev2.blockapps.net",
     uri: "http://strato-dev2.blockapps.net" + "/eth/v1.0",
+    keyserver: "http://blockapps-keymaster.cloudapp.net",
     ipfsHost : "104.131.53.68", //"http://104.236.65.136",
     ipfsPort : "5001",
     ipfsWebPort: "8080",

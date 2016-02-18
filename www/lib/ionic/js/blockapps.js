@@ -99,19 +99,22 @@ var defaults = {};
 module.exports.defaults = defaults;
 
 function HTTPQuery(queryPath, params) {
+
     var options = {
-        "uri":defaults.serverURI + defaults.apiPrefix + queryPath,
+        "uri": "http://strato-dev2.blockapps.net" + defaults.apiPrefix + queryPath,
         "json" : true,
         rejectUnauthorized: false,
         requestCert: true,
         agent: false
     };
+    //console.log("options: " + JSON.stringify(options))
     if (Object.keys(params).length != 1) {
         throw new Error(
             "HTTPQuery(_, params): params must have exactly one field, " +
                 "the method get|post|data"
         );
     }
+    console.log("params: " + JSON.stringify(params))
     var method = Object.keys(params)[0];
     switch (method) {
     case "get":
@@ -184,7 +187,8 @@ function Int(x) {
         catch (e) {
             var err = "Received exception:\n" + e + "\n" +
                 "Int(x): x must be a number, hex string, or Buffer";
-            throw new Error(err);
+            return 0;
+            //throw new Error(err);
         }
     }
 
@@ -589,10 +593,13 @@ function storage(storageQueryObj) {
     }
     return HTTPQuery("/storage", {"get": storageQueryObj}).then(
         function(stor) {
+        console.log("stor: " + JSON.stringify(stor))
+        console.log("stor.length = " + stor.length)
         if (stor.length === 0) {
-            throw new pollPromise.NotDoneError(
-                "Query did not match any storage locations"
-            );
+            return [""]
+            // throw new pollPromise.NotDoneError(
+            //     "Query did not match any storage locations"
+            // );
         }
         else {
             return stor;
@@ -856,6 +863,9 @@ function getSubKey(key, start, size) {
         return [{"key" : key, "value" : "0"}];
     }).get(0).then(function(storageItem) {
         var keyValue = EthWord(storageItem.value);
+        if(keyValue === null){
+            return null;
+        }
         return keyValue.slice(32 - (start + size), 32 - start);
     });
 }
@@ -899,6 +909,13 @@ function pushZeros(output, count) {
 module.exports.Word = EthWord;
 module.exports.Word.zero = EthWord.bind(undefined, "00");
 function EthWord(x) {
+    console.log("EthWord")
+
+    if(typeof(x) === 'undefined'){
+        console.log("EthWord on empty object!");
+        return null;
+    } 
+
     if (typeof x === "string" && x.match(/[0-9a-fA-F]/) === null) {
         throw "EthWord(x): x must be a hex string";
     }
@@ -2583,7 +2600,7 @@ var bigInt = (function (undefined) {
     function multiplyKaratsuba(x, y) {
         var n = Math.max(x.length, y.length);
         
-        if (n <= 400) return multiplyLong(x, y);
+        if (n <= 30) return multiplyLong(x, y);
         n = Math.ceil(n / 2);
 
         var b = x.slice(n),
@@ -2598,6 +2615,12 @@ var bigInt = (function (undefined) {
         var product = addAny(addAny(ac, shiftLeft(subtract(subtract(abcd, ac), bd), n)), shiftLeft(bd, 2 * n));
         trim(product);
         return product;
+    }
+
+    // The following function is derived from a surface fit of a graph plotting the performance difference
+    // between long multiplication and karatsuba multiplication versus the lengths of the two arrays.
+    function useKaratsuba(l1, l2) {
+        return -0.012 * l1 - 0.012 * l2 + 0.000015 * l1 * l2 > 0;
     }
 
     BigInteger.prototype.multiply = function (v) {
@@ -2615,7 +2638,7 @@ var bigInt = (function (undefined) {
             }
             b = smallToArray(abs);
         }
-        if (a.length + b.length > 4000) // Karatsuba is only faster for sufficiently large inputs
+        if (useKaratsuba(a.length, b.length)) // Karatsuba is only faster for certain array sizes
             return new BigInteger(multiplyKaratsuba(a, b), sign);
         return new BigInteger(multiplyLong(a, b), sign);
     };
@@ -21248,7 +21271,7 @@ module.exports={
   "_args": [
     [
       "elliptic@^5.0.0",
-      "/Users/salmaancraig/heth/blockapps-js/node_modules/ethereumjs-util"
+      "/Users/salmaancraig/blockapps-js/node_modules/ethereumjs-util"
     ]
   ],
   "_from": "elliptic@>=5.0.0 <6.0.0",
@@ -21279,7 +21302,7 @@ module.exports={
   "_shasum": "fa294b6563c6ddbc9ba3dc8594687ae840858f10",
   "_shrinkwrap": null,
   "_spec": "elliptic@^5.0.0",
-  "_where": "/Users/salmaancraig/heth/blockapps-js/node_modules/ethereumjs-util",
+  "_where": "/Users/salmaancraig/blockapps-js/node_modules/ethereumjs-util",
   "author": {
     "email": "fedor@indutny.com",
     "name": "Fedor Indutny"
