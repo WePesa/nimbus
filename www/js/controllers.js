@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
-.controller('DashCtrl', function($scope, Accounts, config, Transactions) {
+.controller('DashCtrl', function($scope, Accounts, config, Transactions, blockapps) {
 
   $scope.$on('$ionicView.enter', function(e) {
 
@@ -19,11 +19,14 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
       });
 
     Accounts.balance().success(function(res){
-      $scope.balance = res[0].balance;
+      console.log(JSON.stringify(res))
+      $scope.balance = blockapps.ethbase.Units.convertEth(res[0].balance).from("wei").to("ether").toPrecision(4)
     })
 
     Transactions.all(Accounts.getCurrentAddress()).success(function(response){
-      $scope.lastAmount = response[0].value;
+
+      $scope.lastAmount = blockapps.ethbase.Units.convertEth(response[0].value).from("wei").to("ether").toPrecision(4)
+    
       $scope.lastTo = response[0].to;
     })
 
@@ -45,6 +48,7 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
       $scope.faces = response.map(function(x){return Transactions.face(x.hash)})
 
       $scope.c2fmap = response.map(function(value, index) {
+        value.value = blockapps.ethbase.Units.convertEth(value.value).from("wei").to("ether").toPrecision(4)
         return {
             data: value,
             value: $scope.faces[index]
@@ -54,7 +58,7 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
     Transactions.balance(Accounts.getCurrentAddress()).success(function(response){
       console.log('balance response: ' + JSON.stringify(response))
-        $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether").toPrecision(10)
+        $scope.balance = blockapps.ethbase.Units.convertEth(response[0].balance).from("wei").to("ether").toPrecision(4)
         console.log("ETH: " + $scope.balance)
     })
   })

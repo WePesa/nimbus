@@ -1,4 +1,4 @@
-angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blockapps', 'ipfs_', 'lightwallet_'])
+angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blockapps', 'ipfs_', 'lightwallet_', 'ionic.utils'])
 
 .factory('Camera', function ($http, $rootScope, $stateParams, $q, _, $cordovaCamera, $cordovaBarcodeScanner, $cordovaDevice) {
 
@@ -117,7 +117,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
   };
 })
 
-.factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, config, blockapps, $ionicPlatform, ipfs_, lightwallet_) { //$cordovaKeychain, $cordovaTouchID
+.factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, config, blockapps, $ionicPlatform, ipfs_, lightwallet_, $localstorage) { //$cordovaKeychain, $cordovaTouchID
 
   var p1 = {
     address : "1cee1690d65268ca551bcd2791c570a8fcac5e7a",
@@ -142,6 +142,10 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
     ipfshash : "11111"
   }
 
+  $localstorage.setObject("p1", p1);
+  $localstorage.setObject("p2", p2);
+
+  console.log("Personas: " + $localstorage.keys())
   var ps = [p1,p2];
 
   var _currentAddress = ps[0].address;
@@ -463,3 +467,26 @@ var config = angular.module('config', [])
     personaRegistry: "d9ffec038375699cc76528f3b7fa5dd07e4ea4df"
   }
 );
+
+angular.module('ionic.utils', [])
+
+.factory('$localstorage', ['$window', function($window, underscore) {
+
+  return {
+    keys: function(){
+      return _.keys($window.localStorage);
+    },
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}]);
