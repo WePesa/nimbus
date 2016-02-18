@@ -19,6 +19,28 @@ navigation history that also transitions its views in and out.
       </a>
     </div>
 
+    <div class="item item-divider">
+      Activities
+    </div>
+
+    <div class="list">
+      <a class="item item-icon-right" href="#/tab/dash">
+        <i class="icon ion-ios-pulse"></i>
+        Account overview
+      </a>
+    </div>
+
+    <div class="list">
+      <a class="item item-icon-right" href="#/tab/transactions">
+        <i class="icon ion-ios-chatboxes-outline"></i>
+        Transactions
+      </a>
+    </div>
+
+    <div class="item item-divider">
+      Persona
+    </div>
+
     <div class="list">
       <a class="item item-icon-right" href="#/tab/account">
         <i class="icon ion-ios-person"></i>
@@ -32,6 +54,7 @@ navigation history that also transitions its views in and out.
         Security settings
       </a>
     </div>
+
 
   </ion-side-menu>
 
@@ -50,17 +73,17 @@ navigation history that also transitions its views in and out.
     <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
       <!-- Dashboard Tab -->
-      <ion-tab title="Account overview" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/dash">
+      <ion-tab title="Account overview" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/dash" hidden=false>
         <ion-nav-view name="tab-dash"></ion-nav-view>
       </ion-tab>
 
       <!-- Transactions Tab -->
-      <ion-tab title="Transactions" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/transactions">
+      <ion-tab title="Transactions" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/transactions" hidden=false>
         <ion-nav-view name="tab-transactions"></ion-nav-view>
       </ion-tab>
 
       <!-- Camera Tab -->
-      <ion-tab title="Camera" icon-off="ion-ios-barcode-outline" icon-on="ion-ios-barcode" href="#/tab/camera">
+      <ion-tab title="Camera" icon-off="ion-ios-barcode-outline" icon-on="ion-ios-barcode" href="#/tab/camera" hidden=true>
         <ion-nav-view name="tab-camera"></ion-nav-view>
       </ion-tab>
 
