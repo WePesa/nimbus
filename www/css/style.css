@@ -17,3 +17,27 @@ $color_white: #ffff00;
 .bar.bar-calm {
     background-color: #223765;
 }
+
+.item-divider,
+.item.item-divider {
+  color: #223765;
+  border: none;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.bar-header.bar-dark {
+  background: #e53b51;
+}
+
+.back-text {
+  display: none !important;
+}
+
+footer {
+  position: absolute;
+  bottom: 10px;
+  left: 61px;
+  width: 170px;
+  font-size: 10px;
+  color: #223765;
+}

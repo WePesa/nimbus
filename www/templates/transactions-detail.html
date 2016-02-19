@@ -4,6 +4,10 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
+<ion-nav-bar>
+  <ion-nav-back-button>
+  </ion-nav-back-button>
+</ion-nav-bar>
 <ion-view view-title="{{transaction.name}}">
   <ion-content class="padding">
     <img ng-src="{{face}}" style="width: 64px; height: 64px">
@@ -24,10 +28,6 @@
       </div>
 
       <!-- <img ng=src="{{barcode}}" style="width: 128px; height: 128px"> -->
-
-      <div class="item item-divider">
-        <a href="#/tab/transactions">Go back</a>
-      </div>
     </div>
   </ion-content>
 </ion-view>
