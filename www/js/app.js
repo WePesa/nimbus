@@ -43,7 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.dash', {
     url: '/dash',
     views: {
-      'tab-dash': {
+      'menuContent': {
         templateUrl: 'templates/tab-dash.html',
         controller: 'DashCtrl'
       }
@@ -53,7 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.transactions', {
     url: '/transactions',
     views: {
-      'tab-transactions': {
+      'menuContent': {
         templateUrl: 'templates/tab-transactions.html',
         controller: 'TransactionsCtrl'
       }
@@ -63,7 +63,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.transactions-detail', {
     url: '/transactions/:txId',
     views: {
-      'tab-transactions': {
+      'menuContent': {
         templateUrl: 'templates/transactions-detail.html',
         controller: 'TransactionsDetailCtrl'
       }
@@ -73,7 +73,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.settings', {
     url: '/settings',
     views: {
-      'tab-settings': {
+      'menuContent': {
         templateUrl: 'templates/tab-settings.html',
         controller: 'SettingsCtrl'
       }
@@ -83,7 +83,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.account', {
     url: '/account',
     views: {
-      'tab-account': {
+      'menuContent': {
         templateUrl: 'templates/tab-account.html',
         controller: 'AccountCtrl'
       }
@@ -93,7 +93,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.account-detail', {
     url: '/account/:accId',
     views: {
-      'tab-account': {
+      'menuContent': {
         templateUrl: 'templates/account-detail.html',
         controller: 'AccountDetailCtrl'
       }
