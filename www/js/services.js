@@ -162,6 +162,43 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
     _currentAddress = address;
   };
 
+  var getPersona = function(address){
+    console.log("Accounts.getPersona()");
+
+    // contract.state.personas.then(function (s) {
+    //     console.log(s);
+    // });
+
+    // // this works
+    // (contract.state.numPersonas).then(function(v){
+    //       console.log("hello blockapps")
+    //       console.log("this in contract: " + v.toString())
+    //     });
+
+    // // this doesn't
+    (contract.state.ipfsAttributeLookup(getCurrentAddress())).then(function(s){
+          console.log("hello blockapps too")
+          console.log("Keylookup!: " + s.owner.toString());
+        });
+
+    // this doesn't work either :/
+    // contract.state
+    //   .getPersonaAttributes("903b4a914940f08399e41dddcab8e1ea8939cbab")
+    //   .callFrom("e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d")
+    //   .then(function(v){
+    //     console.log("value: " + v)
+    //   })
+
+    return new Promise( function(accept, reject){
+
+      var persona = _.find(ps, function(p){
+        return p.address === address;
+      });
+
+      accept(persona.personaSchema);
+    })
+  };
+
   var upsertPersona = function(newname){
 
     var address = getCurrentAddress();
@@ -237,6 +274,13 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
     upsertPersona : upsertPersona,
 
+    getPersona: getPersona,
+
+    getPending : function(name){
+        console.log("Accounts.getPending("+name+")")
+        return $http.get(config.keyserver + '/users/'+name+'/pending')
+    },
+
     getAccount : function(address){
       return new Promise(function(accept, reject){
         accept(_.find(ps, function(v){ return v.address == address}));
@@ -283,44 +327,6 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
           accept(ipfsHashHex);
         });
       });
-    },
-
-
-    getPersona : function(address){
-      console.log("Accounts.getPersona()");
-
-      // contract.state.personas.then(function (s) {
-      //     console.log(s);
-      // });
-
-      // // this works
-      // (contract.state.numPersonas).then(function(v){
-      //       console.log("hello blockapps")
-      //       console.log("this in contract: " + v.toString())
-      //     });
-
-      // // this doesn't
-      (contract.state.ipfsAttributeLookup("903b4a914940f08399e41dddcab8e1ea8939cbab")).then(function(s){
-            console.log("hello blockapps too")
-            console.log("Keylookup!: " + s.owner.toString());
-          });
-
-      // this doesn't work either :/
-      // contract.state
-      //   .getPersonaAttributes("903b4a914940f08399e41dddcab8e1ea8939cbab")
-      //   .callFrom("e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d")
-      //   .then(function(v){
-      //     console.log("value: " + v)
-      //   })
-
-      return new Promise( function(accept, reject){
-
-        var persona = _.find(ps, function(p){
-          return p.address === address;
-        });
-
-        accept(persona.personaSchema);
-      })
     },
 
     getPersona_old : function(address){
@@ -460,7 +466,7 @@ var config = angular.module('config', [])
 .constant('config', {
     strato : "http://strato-dev2.blockapps.net",
     uri: "http://strato-dev2.blockapps.net" + "/eth/v1.0",
-    keyserver: "http://blockapps-keymaster.cloudapp.net",
+    keyserver: "http://localhost:8000", //"http://blockapps-keymaster.cloudapp.net",
     ipfsHost : "104.131.53.68", //"http://104.236.65.136",
     ipfsPort : "5001",
     ipfsWebPort: "8080",

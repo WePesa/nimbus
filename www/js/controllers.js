@@ -30,7 +30,10 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
       $scope.lastTo = response[0].to;
     })
 
-    $scope.incomingTx = []
+    Accounts.getPending("Jesus").success(function(response){
+      console.log("response: " + response.length)
+      $scope.pending = response;
+    })
 
   });
 
