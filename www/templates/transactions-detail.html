@@ -10,21 +10,25 @@
 </ion-nav-bar>
 <ion-view view-title="{{transaction.name}}">
   <ion-content class="padding">
-    <img ng-src="{{face}}" style="width: 64px; height: 64px">
+    
 
     <div class="card">
-      <div class="item item-divider">
-        Type: {{transaction[0].transactionType}}
-      </div>
+      
       <div class="item item-text-wrap">
-        From: {{transaction[0].from}} <img ng-src="{{faceFrom}}" style="width: 64px; height: 64px">
-        <br>
-        To: {{transaction[0].to}} <img ng-src="{{faceTo}}" style="width: 64px; height: 64px">
-        <br>
         Amount: {{transaction[0].value}} <b>WEI</b>
+        <hr>
+        <img ng-src="{{faceFrom}}" style="width: 64px; height: 64px">
+        From: {{transaction[0].from}} 
+        <hr>
+        <img ng-src="{{faceTo}}" style="width: 64px; height: 64px">
+        To: {{transaction[0].to}} 
+        
       </div>
       <div class="item item-divider">
-        Block number: {{transaction[0].blockNumber}}
+
+      </div> 
+      <div class="item item-divider">
+        Type: {{transaction[0].transactionType}} | Block number: {{transaction[0].blockNumber}}
       </div>
 
       <!-- <img ng=src="{{barcode}}" style="width: 128px; height: 128px"> -->
