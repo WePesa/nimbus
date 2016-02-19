@@ -1,5 +1,19 @@
 /* Empty. Add your own CSS if you like */
 
+
 $stable:                          #ff0000 !default;
 
 $color_white: #ffff00;
+
+
+[nav-bar-transition="ios"] [nav-bar="active"] .bar, [nav-bar-transition="ios"] [nav-bar="entering"] .bar{
+    background-color: #223765;
+}
+
+.bar-calm.nav-bar-container {
+    background-color: #223765;
+}
+
+.bar.bar-calm {
+    background-color: #223765;
+}
