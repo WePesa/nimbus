@@ -61,19 +61,19 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
   return {
 
     all: function (address) {
-      console.log("Transactions.all("+address+")");
+      //console.log("Transactions.all("+address+")");
       return $http.get(config.uri+'/transaction?address='+address)
       //return $http.get(url, { params: { address: myaddress } })  //{ user_id: $rootScope.session } })
     },
 
     get: function (hash) {
-      console.log("Transactions.get("+hash+")");
+      //console.log("Transactions.get("+hash+")");
       return $http.get(config.uri+'/transaction?hash='+hash)
        //return $http.get('https://friends.json/getOne', { params: { user_id: $rootScope.session, tx_id: $stateParams.idtx } })
     },
 
     face: function (hash){
-      console.log("Transactions.face("+hash+")");
+      //console.log("Transactions.face("+hash+")");
       //return ('http://robohash.org/'+hash+'?set=set3&size=64x64')
       return ('http://www.gravatar.com/avatar/'+hash+'?d=retro&s=64') // monsterid
 
@@ -120,7 +120,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 .factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, config, blockapps, $ionicPlatform, ipfs_, lightwallet_, $localstorage) { //$cordovaKeychain, $cordovaTouchID
 
   var p1 = {
-    address : "1cee1690d65268ca551bcd2791c570a8fcac5e7a",
+    address : "903b4a914940f08399e41dddcab8e1ea8939cbab",
     privkey : "a08494b907ec1f4b834cc1f6aee65d2d341d0764162b61e9485b217bce3ce751",
     personaSchema :  {
         'name': "Jesus",
@@ -131,7 +131,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
     ipfshash : "00000"
   }
   var p2 = {
-    address : "903b4a914940f08399e41dddcab8e1ea8939cbab",
+    address : "1cee1690d65268ca551bcd2791c570a8fcac5e7a",
     privkey : "e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d",
     personaSchema :  {
         'name': "Johann Sebastian Bach",
@@ -159,6 +159,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
   };
 
   var setCurrentAddress = function(address){
+    console.log("Account.setCurrentAddress("+address+")")
     _currentAddress = address;
   };
 
@@ -276,9 +277,9 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
     getPersona: getPersona,
 
-    getPending : function(name){
-        console.log("Accounts.getPending("+name+")")
-        return $http.get(config.keyserver + '/users/'+name+'/pending')
+    getPending : function(){
+        console.log("Accounts.getPending("+getCurrentAddress()+")")
+        return $http.get(config.keyserver + '/addresses/'+getCurrentAddress()+'/pending')
     },
 
     getAccount : function(address){

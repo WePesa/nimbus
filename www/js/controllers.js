@@ -24,13 +24,11 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
     })
 
     Transactions.all(Accounts.getCurrentAddress()).success(function(response){
-
       $scope.lastAmount = blockapps.ethbase.Units.convertEth(response[0].value).from("wei").to("ether").toPrecision(4)
-    
       $scope.lastTo = response[0].to;
     })
 
-    Accounts.getPending("Jesus").success(function(response){
+    Accounts.getPending().success(function(response){
       console.log("response: " + response.length)
       $scope.pending = response;
     })
