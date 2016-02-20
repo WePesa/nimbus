@@ -121,7 +121,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
   var p1 = {
     address : "903b4a914940f08399e41dddcab8e1ea8939cbab",
-    privkey : "a08494b907ec1f4b834cc1f6aee65d2d341d0764162b61e9485b217bce3ce751",
+    privkey : "e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d",
     personaSchema :  {
         'name': "Jesus",
         'image': {'@type': 'ImageObject',
@@ -132,7 +132,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
   }
   var p2 = {
     address : "1cee1690d65268ca551bcd2791c570a8fcac5e7a",
-    privkey : "e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d",
+    privkey : "a08494b907ec1f4b834cc1f6aee65d2d341d0764162b61e9485b217bce3ce751",
     personaSchema :  {
         'name': "Johann Sebastian Bach",
         'image': {'@type': 'ImageObject',
@@ -266,6 +266,12 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
     }
   };
+
+  getAccount = function(address){
+      return new Promise(function(accept, reject){
+        accept(_.find(ps, function(v){ return v.address == address}));
+      })
+    };
  
   return {
 
@@ -282,11 +288,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
         return $http.get(config.keyserver + '/addresses/'+getCurrentAddress()+'/pending')
     },
 
-    getAccount : function(address){
-      return new Promise(function(accept, reject){
-        accept(_.find(ps, function(v){ return v.address == address}));
-      })
-    },
+    getAccount : getAccount,
 
     getAllAccounts : function(){
       return new Promise(function(accept, reject){
@@ -373,10 +375,26 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
       });
     },
 
-    signTx : function(hash) {
-      contract.state["setPersonaAttributes"].apply(null,["98765432"]).txParams({
-        value : blockapps.ethbase.Units.ethValue(1000000000).in("wei")
-      }).callFrom(privkey).then(function(r){console.log("afterTX: " + r)}).catch(function (err) { console.log("err: " + err); });
+    signTx : function(p) {
+
+      getAccount(getCurrentAddress()).then(function(account){
+        console.log("account:  " + JSON.stringify(account))
+        var simpleIdContract = blockapps.Solidity.attach({"code":"contract SimpleIdentity {\n\n\taddress master = 0x903b4a914940f08399e41dddcab8e1ea8939cbab;\n\tstring status = \"sleeping\";\n\n\tfunction ringBell(){\n\t\tif(msg.sender == master){\n\t\t\tstatus = \"master called\";\n\t\t} else {\n\t\t\tstatus = \"ignoring call\";\n\t\t}\n\t}\n\n\tfunction sleep(){\n\t\tstatus = \"sleeping\";\n\t}\n}","name":"SimpleIdentity","vmCode":"606060405273903b4a914940f08399e41dddcab8e1ea8939cbab600060006101000a81548173ffffffffffffffffffffffffffffffffffffffff02191690830217905550604060405190810160405280600881526020017f736c656570696e670000000000000000000000000000000000000000000000008152602001506001600050908051906020019082805482825590600052602060002090601f016020900481019282156100cd579182015b828111156100cc5782518260005055916020019190600101906100ae565b5b5090506100f891906100da565b808211156100f457600081815060009055506001016100da565b5090565b50506102e5806101096000396000f30060606040526000357c010000000000000000000000000000000000000000000000000000000090048063133a473e14610044578063d1df12521461005157610042565b005b61004f60045061022b565b005b61005c60045061005e565b005b600060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561017057604060405190810160405280600d81526020017f6d61737465722063616c6c6564000000000000000000000000000000000000008152602001506001600050908051906020019082805482825590600052602060002090601f0160209004810192821561013e579182015b8281111561013d57825182600050559160200191906001019061011f565b5b509050610169919061014b565b80821115610165576000818150600090555060010161014b565b5090565b5050610228565b604060405190810160405280600d81526020017f69676e6f72696e672063616c6c000000000000000000000000000000000000008152602001506001600050908051906020019082805482825590600052602060002090601f016020900481019282156101fa579182015b828111156101f95782518260005055916020019190600101906101db565b5b5090506102259190610207565b808211156102215760008181506000905550600101610207565b5090565b50505b5b565b604060405190810160405280600881526020017f736c656570696e670000000000000000000000000000000000000000000000008152602001506001600050908051906020019082805482825590600052602060002090601f016020900481019282156102b5579182015b828111156102b4578251826000505591602001919060010190610296565b5b5090506102e091906102c2565b808211156102dc57600081815060009055506001016102c2565b5090565b50505b56","symTab":{"status":{"atStorageKey":"1","bytesUsed":"20","jsType":"String","arrayNewKeyEach":"20","arrayDataStart":"b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6","solidityType":"string"},"sleep":{"functionDomain":[],"functionArgs":[],"functionHash":"133a473e","bytesUsed":"0","jsType":"Function","solidityType":"function() returns ()"},"master":{"atStorageKey":"0","bytesUsed":"14","jsType":"Address","solidityType":"address"},"ringBell":{"functionDomain":[],"functionArgs":[],"functionHash":"d1df1252","bytesUsed":"0","jsType":"Function","solidityType":"function() returns ()"}},"address":"b2ef9164f2415a437a6e04217c3138d6946ee8cc"});
+        simpleIdContract.state[p.method].apply(null,[]).txParams({
+          value : blockapps.ethbase.Units.ethValue(1000000000).in("wei")
+        }).callFrom(account.privkey).then(function(r){console.log("afterTX: " + r)}).catch(function (err) { console.log("err: " + err); });
+      })
+
+    },
+
+    removeTx : function(p){
+
+      console.log("P:" + JSON.stringify(p))
+
+      $http.get(config.keyserver + '/addresses/'+getCurrentAddress()+'/pending/remove/'+p.time).success(function(s){
+
+        console.log("successfully removed? " + s)
+      })
 
     },
 

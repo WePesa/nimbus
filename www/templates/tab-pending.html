@@ -1,0 +1,21 @@
+<ion-view view-title="Pending">
+  <ion-content>
+    <ion-scroll style="height: 700px"> <!--FIXME dynamic -->
+      <ion-list show-delete="false" can-swipe="true" swipe-direction="both">>
+
+        <ion-item  ng-repeat="p in pending | orderBy:'-time'" type="item-text-wrap" href="#">
+            
+          <!-- <img ng-src="{{c2f.value}}"> -->
+          <h2>{{p.contractName}}</h2>
+          <p>{{p.method}}</p>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+
+          <ion-option-button side="right" class="button-balanced icon ion-edit" ng-click="signTx(p)"></ion-option-button>
+          <ion-option-button side="left" class="button-assertive icon ion-trash-a" ng-click="removeTx(p)"></ion-option-button>
+        </ion-item>
+      </ion-list>
+    </ion-scroll>
+
+  </ion-content>
+</ion-view>
+

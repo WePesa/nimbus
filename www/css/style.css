@@ -1,9 +1,6 @@
 /* Empty. Add your own CSS if you like */
 
 
-$stable:                          #ff0000 !default;
-
-$color_white: #ffff00;
 
 
 [nav-bar-transition="ios"] [nav-bar="active"] .bar, [nav-bar-transition="ios"] [nav-bar="entering"] .bar{

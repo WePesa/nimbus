@@ -1,4 +1,14 @@
+<ion-nav-bar>
+  <ion-nav-back-button ng-click="upsertPersona(newPersona.name)">
+  </ion-nav-back-button>
+</ion-nav-bar>
 <ion-view view-title="{{persona.name}}">
+
+   <ion-nav-buttons side="right">
+       <button class="button button-clear icon ion-trash-a" ng-click="getPersona()">
+      </button>
+    </ion-nav-buttons>
+
   <ion-content class="padding">
     <img ng-src="{{ipfsURL + persona.image.contentUrl}}" style="width: 64px; height: 64px">
 
@@ -13,14 +23,14 @@
         <h2>{{persona.address}}
     </div>
 
-    <div class="item item-divider">
+<!--     <div class="item item-divider">
         <a href="#/tab/account">Go back</a>
     </div>
-
-    <div class="button-bar bar-footer">
+ -->
+<!--     <div class="button-bar bar-footer">
       <a class="button button-balanced" ng-click="upsertPersona(newPersona.name)">Update Persona</a>
       <a class="button button-assertive" ng-submit="getPersona()">Clear Persona</a>
-    </div>
+    </div> -->
 
   </ion-content>
 </ion-view>

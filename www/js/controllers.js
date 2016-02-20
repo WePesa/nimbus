@@ -37,6 +37,31 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
 })
 
+.controller('PendingCtrl', function($scope, Transactions, _, blockapps, Accounts) {
+
+  $scope.$on('$ionicView.enter', function(e) {
+
+      Accounts.getPending().success(function(response){
+      console.log("response: " + response.length)
+      $scope.pending = response;
+    })
+  });
+
+
+  $scope.signTx = function(p){
+    console.log("signTx("+JSON.stringify(p)+")")
+    Accounts.signTx(p);
+  };
+
+  $scope.removeTx = function(p){
+
+    console.log("removing: " + JSON.stringify(p));
+    Accounts.removeTx(p);
+
+  };
+
+})
+
 .controller('TransactionsCtrl', function($scope, Transactions, _, blockapps, Accounts) {
 
   $scope.$on('$ionicView.enter', function(e) {
@@ -122,40 +147,31 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
   // ethereum address <-> ipfsHash -> json schema
 
-
-  $scope.signTx = function(){
-    console.log("signTx()")
-    Accounts.signTx("0x666666");
-  };
-
 })
 
 .controller('AccountDetailCtrl', function($scope, $stateParams, Transactions, Accounts, config) {
   console.log("hello AccountDetailCtrl()")
 
-  Accounts.getPersona($stateParams.accId).then(function(v){
+  $scope.ipfsURL = "http://"+config.ipfsHost+":"+config.ipfsWebPort;
+
+  if($stateParams.accId === 0){
+
+    //Accounts.newPersona().then(function(v){
+
+    //}
+
+  } else {
+    Accounts.getPersona($stateParams.accId).then(function(v){
       $scope.$apply(function(){
         $scope.persona = v;
       })
-  });
-
-  $scope.ipfsURL = "http://"+config.ipfsHost+":"+config.ipfsWebPort;
+    });
+  }
 
   $scope.upsertPersona = function(newName){
-    console.log("AccountDetailCtrl.upsertPersona()")
-
-    console.log("New name is: " + newName)
-
+    console.log("AccountDetailCtrl.upsertPersona("+newName+")");
     Accounts.upsertPersona(newName);
-    //.then(function(a){
-    //  console.log("did upsert")
-      // $scope.$apply(function(){
-      //   $scope.ipfsHashHex = a;
-      //   console.log("new ipfsHashHex: " + a)
-      // })
-    //})
   };
-
 })
 
 .controller('SettingsCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner) {
