@@ -69,14 +69,12 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
     get: function (hash) {
       //console.log("Transactions.get("+hash+")");
       return $http.get(config.uri+'/transaction?hash='+hash)
-       //return $http.get('https://friends.json/getOne', { params: { user_id: $rootScope.session, tx_id: $stateParams.idtx } })
     },
 
     face: function (hash){
       //console.log("Transactions.face("+hash+")");
       //return ('http://robohash.org/'+hash+'?set=set3&size=64x64')
       return ('http://www.gravatar.com/avatar/'+hash+'?d=retro&s=64') // monsterid
-
     },
 
     balance: function(account){
@@ -145,7 +143,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
   $localstorage.setObject("p1", p1);
   $localstorage.setObject("p2", p2);
 
-  console.log("Personas: " + $localstorage.keys())
+  console.log("localstorage keys: " + $localstorage.keys())
   var ps = [p1,p2];
 
   var _currentAddress = ps[0].address;
@@ -166,37 +164,18 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
   var getPersona = function(address){
     console.log("Accounts.getPersona()");
 
-    // contract.state.personas.then(function (s) {
-    //     console.log(s);
-    // });
-
-    // // this works
-    // (contract.state.numPersonas).then(function(v){
-    //       console.log("hello blockapps")
-    //       console.log("this in contract: " + v.toString())
-    //     });
-
-    // // this doesn't
     (contract.state.ipfsAttributeLookup(getCurrentAddress())).then(function(s){
           console.log("hello blockapps too")
           console.log("Keylookup!: " + s.owner.toString());
         });
 
-    // this doesn't work either :/
-    // contract.state
-    //   .getPersonaAttributes("903b4a914940f08399e41dddcab8e1ea8939cbab")
-    //   .callFrom("e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d")
-    //   .then(function(v){
-    //     console.log("value: " + v)
-    //   })
-
     return new Promise( function(accept, reject){
-
       var persona = _.find(ps, function(p){
         return p.address === address;
       });
 
       accept(persona.personaSchema);
+
     })
   };
 
@@ -283,12 +262,18 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
     getPersona: getPersona,
 
+    getAccount : getAccount,
+
+    getFace: function (hash){
+      //console.log("Transactions.face("+hash+")");
+      //return ('http://robohash.org/'+hash+'?set=set3&size=64x64')
+      return ('http://www.gravatar.com/avatar/'+hash+'?d=retro&s=64') // monsterid
+    },
+
     getPending : function(){
         console.log("Accounts.getPending("+getCurrentAddress()+")")
         return $http.get(config.keyserver + '/addresses/'+getCurrentAddress()+'/pending')
     },
-
-    getAccount : getAccount,
 
     getAllAccounts : function(){
       return new Promise(function(accept, reject){
@@ -334,30 +319,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
 
     getPersona_old : function(address){
 
-      // this works
-      (contract.state.numPersonas).then(function(v){
-            console.log("hello blockapps")
-            console.log("this in contract: " + v.toString())
-          })
-
-      // this doesn't
-      // (contract.state.ipfsAttributeLookup("903b4a914940f08399e41dddcab8e1ea8939cbab")).then(function(v){
-      //       console.log("hello blockapps")
-      //       console.log("this in contract: " + v.toString())
-      //     })
-
-      // this doesn't work either :/
-      // contract.state
-      //   .getPersonaAttributes("903b4a914940f08399e41dddcab8e1ea8939cbab")
-      //   .callFrom("e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d")
-      //   .then(function(v){
-      //     console.log("value: " + v)
-      //   })
-
       return new Promise( function(accept, reject){
-
-        //console.log("What is the contract? :" + JSON.stringify(contract))
-        //console.log("What is state? :" + Object.getOwnPropertyNames(contract.state))
 
         var ipfsHashHex =  "12204919b9cf05c5ee5c5b6b87d4ee54ea9600a9e9f7c9e18f18566d233324eaafe2";//res[0].value;
         console.log("ipfsHashHex: " + ipfsHashHex)
@@ -376,26 +338,21 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
     },
 
     signTx : function(p) {
-
       getAccount(getCurrentAddress()).then(function(account){
         console.log("account:  " + JSON.stringify(account))
         var simpleIdContract = blockapps.Solidity.attach({"code":"contract SimpleIdentity {\n\n\taddress master = 0x903b4a914940f08399e41dddcab8e1ea8939cbab;\n\tstring status = \"sleeping\";\n\n\tfunction ringBell(){\n\t\tif(msg.sender == master){\n\t\t\tstatus = \"master called\";\n\t\t} else {\n\t\t\tstatus = \"ignoring call\";\n\t\t}\n\t}\n\n\tfunction sleep(){\n\t\tstatus = \"sleeping\";\n\t}\n}","name":"SimpleIdentity","vmCode":"606060405273903b4a914940f08399e41dddcab8e1ea8939cbab600060006101000a81548173ffffffffffffffffffffffffffffffffffffffff02191690830217905550604060405190810160405280600881526020017f736c656570696e670000000000000000000000000000000000000000000000008152602001506001600050908051906020019082805482825590600052602060002090601f016020900481019282156100cd579182015b828111156100cc5782518260005055916020019190600101906100ae565b5b5090506100f891906100da565b808211156100f457600081815060009055506001016100da565b5090565b50506102e5806101096000396000f30060606040526000357c010000000000000000000000000000000000000000000000000000000090048063133a473e14610044578063d1df12521461005157610042565b005b61004f60045061022b565b005b61005c60045061005e565b005b600060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561017057604060405190810160405280600d81526020017f6d61737465722063616c6c6564000000000000000000000000000000000000008152602001506001600050908051906020019082805482825590600052602060002090601f0160209004810192821561013e579182015b8281111561013d57825182600050559160200191906001019061011f565b5b509050610169919061014b565b80821115610165576000818150600090555060010161014b565b5090565b5050610228565b604060405190810160405280600d81526020017f69676e6f72696e672063616c6c000000000000000000000000000000000000008152602001506001600050908051906020019082805482825590600052602060002090601f016020900481019282156101fa579182015b828111156101f95782518260005055916020019190600101906101db565b5b5090506102259190610207565b808211156102215760008181506000905550600101610207565b5090565b50505b5b565b604060405190810160405280600881526020017f736c656570696e670000000000000000000000000000000000000000000000008152602001506001600050908051906020019082805482825590600052602060002090601f016020900481019282156102b5579182015b828111156102b4578251826000505591602001919060010190610296565b5b5090506102e091906102c2565b808211156102dc57600081815060009055506001016102c2565b5090565b50505b56","symTab":{"status":{"atStorageKey":"1","bytesUsed":"20","jsType":"String","arrayNewKeyEach":"20","arrayDataStart":"b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6","solidityType":"string"},"sleep":{"functionDomain":[],"functionArgs":[],"functionHash":"133a473e","bytesUsed":"0","jsType":"Function","solidityType":"function() returns ()"},"master":{"atStorageKey":"0","bytesUsed":"14","jsType":"Address","solidityType":"address"},"ringBell":{"functionDomain":[],"functionArgs":[],"functionHash":"d1df1252","bytesUsed":"0","jsType":"Function","solidityType":"function() returns ()"}},"address":"b2ef9164f2415a437a6e04217c3138d6946ee8cc"});
+        // FIXME actually supply args here (but what does [{}] mean?)
         simpleIdContract.state[p.method].apply(null,[]).txParams({
           value : blockapps.ethbase.Units.ethValue(1000000000).in("wei")
         }).callFrom(account.privkey).then(function(r){console.log("afterTX: " + r)}).catch(function (err) { console.log("err: " + err); });
       })
-
     },
 
     removeTx : function(p){
-
       console.log("P:" + JSON.stringify(p))
-
       $http.get(config.keyserver + '/addresses/'+getCurrentAddress()+'/pending/remove/'+p.time).success(function(s){
-
         console.log("successfully removed? " + s)
       })
-
     },
 
     newKey : function(){
@@ -427,7 +384,6 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
           //   console.error(err);
           // })
 
-
       //  } else {
       //    console.log("not on IOS")
       //  }
@@ -437,18 +393,6 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
       var secretSeed = lightwallet.keystore.generateRandomSeed()
       console.log("new wallet: " + secretSeed)
 
-    },
-
-    test : function(){
-      console.log("Accounts.test()")
-      console.log("underscore: " + _)
-      console.log("config: " + JSON.stringify(lightwallet))
-      console.log("ba: " + JSON.stringify(blockapps))
-      console.log("ipfs: " + JSON.stringify(ipfs))
-
-      var secretSeed = lightwallet.keystore.generateRandomSeed()
-
-      console.log("ss: " + secretSeed)
     }
   }
 })

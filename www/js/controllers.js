@@ -40,13 +40,11 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 .controller('PendingCtrl', function($scope, Transactions, _, blockapps, Accounts) {
 
   $scope.$on('$ionicView.enter', function(e) {
-
       Accounts.getPending().success(function(response){
       console.log("response: " + response.length)
       $scope.pending = response;
     })
   });
-
 
   $scope.signTx = function(p){
     console.log("signTx("+JSON.stringify(p)+")")
@@ -54,11 +52,11 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
   };
 
   $scope.removeTx = function(p){
-
     console.log("removing: " + JSON.stringify(p));
     Accounts.removeTx(p);
-
   };
+
+  $scope.ba = blockapps;
 
 })
 

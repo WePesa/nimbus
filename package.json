@@ -1,7 +1,7 @@
 {
-  "name": "koan",
+  "name": "Nimbus",
   "version": "0.1.0",
-  "description": "koan: a mobile ethereum riddle",
+  "description": "Nimbus: a mobile ethereum riddle",
   "dependencies": {
     "angular-bluebird-promises": "^1.0.1",
     "gulp": "^3.5.6",
