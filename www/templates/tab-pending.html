@@ -1,5 +1,7 @@
 <ion-view view-title="Pending">
   <ion-content>
+    <ion-refresher pulling-text="Pull to refresh" on-refresh="refresh()">
+    </ion-refresher>
     <ion-scroll style="height: 700px"> <!--FIXME dynamic -->
       <ion-list show-delete="false" can-swipe="true" swipe-direction="both">> 
 
