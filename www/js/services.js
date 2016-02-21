@@ -430,7 +430,7 @@ var config = angular.module('config', [])
     strato :          "http://strato-dev2.blockapps.net",
     uri:              "http://strato-dev2.blockapps.net" + "/eth/v1.0",
     keyserver:        "http://blockapps-keymaster.cloudapp.net", 
-    ipfsHost :        "http://blockapps-keymaster.cloudapp.net",//"104.131.53.68", //"http://104.236.65.136",
+    ipfsHost :        "blockapps-keymaster.cloudapp.net",//"104.131.53.68", //"http://104.236.65.136",
     ipfsPort :        "5001",
     ipfsWebPort:      "8080",
     personaRegistry:  "d9ffec038375699cc76528f3b7fa5dd07e4ea4df"
