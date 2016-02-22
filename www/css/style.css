@@ -67,6 +67,29 @@
   background-color: #e53b51;
 }
 
+.list-item__pending i {
+  position: absolute;
+  right: 10px;
+  bottom: 26px;
+  font-size: 27px;
+}
+
+.side-menu .item {    
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.side-menu .list {
+  margin-bottom: 0;
+}
+
+.menu {
+  padding-top: 50px;
+}
+
+.side-menu .item-avatar {
+  border: none;
+}
+
 footer {
   position: absolute;
   bottom: 10px;
