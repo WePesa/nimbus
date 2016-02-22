@@ -58,6 +58,7 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
   $scope.removeTx = function(p){
     console.log("removing: " + JSON.stringify(p));
     Accounts.removeTx(p);
+    $scope.refresh();
   };
 
   $scope.ba = blockapps;
