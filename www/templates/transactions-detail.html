@@ -15,18 +15,18 @@
     <div class="card">
       
       <div class="item item-text-wrap">
-        Amount: {{transaction[0].value}} <b>WEI</b>
-        <hr>
-        <img ng-src="{{faceFrom}}" style="width: 64px; height: 64px">
+        <div class="item-content">
+          Amount: {{transaction[0].value}} <b>WEI</b>
+          <hr>
+          <img ng-src="{{faceFrom}}" style="width: 64px; height: 64px">
         From: {{transaction[0].from}} 
-        <hr>
-        <img ng-src="{{faceTo}}" style="width: 64px; height: 64px">
+          <hr>
+          <img ng-src="{{faceTo}}" style="width: 64px; height: 64px">
         To: {{transaction[0].to}} 
         
+        </div>
       </div>
-      <div class="item item-divider">
-
-      </div> 
+       
       <div class="item item-divider">
         Type: {{transaction[0].transactionType}} | Block number: {{transaction[0].blockNumber}}
       </div>
