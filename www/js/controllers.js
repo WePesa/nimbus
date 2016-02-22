@@ -10,7 +10,8 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
         $scope.$apply(function(){
           $scope.apersona = a;
           console.log("New persona: " + $scope.apersona.name);
-          $scope.imageSrc = "http://"+config.ipfsHost+":"+config.ipfsWebPort+ $scope.apersona.image.contentUrl;
+          //$scope.imageSrc = "http://"+config.ipfsHost+":"+config.ipfsWebPort+ $scope.apersona.image.contentUrl;
+          $scope.imageSrc = $scope.apersona.image.contentUrl;
           console.log($scope.imageSrc)
         })
       });

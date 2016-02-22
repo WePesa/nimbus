@@ -121,10 +121,12 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
     address : "903b4a914940f08399e41dddcab8e1ea8939cbab",
     privkey : "e011bdbfde66bb78af76aaf907e6bbf2c5715d163524241ae50b5309b40da42d",
     personaSchema :  {
-        'name': "Jesus",
+        'name': "Weekend account",
         'image': {'@type': 'ImageObject',
               'name': 'avatar',
-              'contentUrl' : '/ipfs/QmW95EqBGLCkbW6nTPcEkDL4MtsnzkHgrxj8KRwTMDyaRR'}
+              //'contentUrl' : '/ipfs/QmW95EqBGLCkbW6nTPcEkDL4MtsnzkHgrxj8KRwTMDyaRR'
+               'contentUrl' : "img/business.jpg"
+            }
     },
     ipfshash : "00000"
   }
@@ -132,10 +134,12 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
     address : "1cee1690d65268ca551bcd2791c570a8fcac5e7a",
     privkey : "a08494b907ec1f4b834cc1f6aee65d2d341d0764162b61e9485b217bce3ce751",
     personaSchema :  {
-        'name': "Johann Sebastian Bach",
+        'name': "Corporate business man",
         'image': {'@type': 'ImageObject',
               'name': 'avatar',
-              'contentUrl' : '/ipfs/QmZjQqCfkVtxjx5yNvvEKFEnTNnz2zsuJCyZuZgPpUPW5D'}
+              ///'contentUrl' : '/ipfs/QmZjQqCfkVtxjx5yNvvEKFEnTNnz2zsuJCyZuZgPpUPW5D'
+              'contentUrl' : "img/pirate.jpg"
+            }
     },
     ipfshash : "11111"
   }
