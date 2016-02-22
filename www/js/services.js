@@ -125,7 +125,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
         'image': {'@type': 'ImageObject',
               'name': 'avatar',
               //'contentUrl' : '/ipfs/QmW95EqBGLCkbW6nTPcEkDL4MtsnzkHgrxj8KRwTMDyaRR'
-               'contentUrl' : "img/business.jpg"
+               'contentUrl' : "img/pirate.jpg"
             }
     },
     ipfshash : "00000"
@@ -138,7 +138,7 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
         'image': {'@type': 'ImageObject',
               'name': 'avatar',
               ///'contentUrl' : '/ipfs/QmZjQqCfkVtxjx5yNvvEKFEnTNnz2zsuJCyZuZgPpUPW5D'
-              'contentUrl' : "img/pirate.jpg"
+              'contentUrl' : "img/business.jpg"
             }
     },
     ipfshash : "11111"

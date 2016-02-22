@@ -11,7 +11,7 @@
                   class="item-remove-animate item-avatar item-icon-right item-light" 
                   type="item-text-wrap" ng-click="select(item.address)">
 
-          <img ng-src="{{ipfsURL + item.personaSchema.image.contentUrl}}">
+          <img ng-src="{{item.personaSchema.image.contentUrl}}">
           <h2>{{item.personaSchema.name}}</h2>
           <p></p>
           <ion-option-button class="button-info"  ng-click="select(item.address); toEdit(item.address)">
