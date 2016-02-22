@@ -70,6 +70,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('tab.pending', {
+    url: '/pending',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tab-pending.html',
+        controller: 'PendingCtrl'
+      }
+    }
+  })
+
+
   .state('tab.settings', {
     url: '/settings',
     views: {

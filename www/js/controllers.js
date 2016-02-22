@@ -24,15 +24,45 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
     })
 
     Transactions.all(Accounts.getCurrentAddress()).success(function(response){
-
       $scope.lastAmount = blockapps.ethbase.Units.convertEth(response[0].value).from("wei").to("ether").toPrecision(4)
-    
       $scope.lastTo = response[0].to;
     })
 
-    $scope.incomingTx = []
+    Accounts.getPending().success(function(response){
+      console.log("response: " + response.length)
+      $scope.pending = response;
+    })
 
   });
+
+})
+
+.controller('PendingCtrl', function($scope, Transactions, _, blockapps, Accounts) {
+
+  $scope.refresh = function(){
+    Accounts.getPending().success(function(response){
+      console.log("response: " + response.length)
+      $scope.pending = response;
+    })
+  };
+
+  $scope.$on('$ionicView.enter', function(e) {
+      $scope.refresh();
+  });
+
+  $scope.signTx = function(p){
+    console.log("signTx("+JSON.stringify(p)+")")
+    Accounts.signTx(p);
+  };
+
+  $scope.removeTx = function(p){
+    console.log("removing: " + JSON.stringify(p));
+    Accounts.removeTx(p);
+  };
+
+  $scope.ba = blockapps;
+
+
 
 })
 
@@ -121,40 +151,31 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
   // ethereum address <-> ipfsHash -> json schema
 
-
-  $scope.signTx = function(){
-    console.log("signTx()")
-    Accounts.signTx("0x666666");
-  };
-
 })
 
 .controller('AccountDetailCtrl', function($scope, $stateParams, Transactions, Accounts, config) {
   console.log("hello AccountDetailCtrl()")
 
-  Accounts.getPersona($stateParams.accId).then(function(v){
+  $scope.ipfsURL = "http://"+config.ipfsHost+":"+config.ipfsWebPort;
+
+  if($stateParams.accId === 0){
+
+    //Accounts.newPersona().then(function(v){
+
+    //}
+
+  } else {
+    Accounts.getPersona($stateParams.accId).then(function(v){
       $scope.$apply(function(){
         $scope.persona = v;
       })
-  });
-
-  $scope.ipfsURL = "http://"+config.ipfsHost+":"+config.ipfsWebPort;
+    });
+  }
 
   $scope.upsertPersona = function(newName){
-    console.log("AccountDetailCtrl.upsertPersona()")
-
-    console.log("New name is: " + newName)
-
+    console.log("AccountDetailCtrl.upsertPersona("+newName+")");
     Accounts.upsertPersona(newName);
-    //.then(function(a){
-    //  console.log("did upsert")
-      // $scope.$apply(function(){
-      //   $scope.ipfsHashHex = a;
-      //   console.log("new ipfsHashHex: " + a)
-      // })
-    //})
   };
-
 })
 
 .controller('SettingsCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner) {

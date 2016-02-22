@@ -114,7 +114,7 @@ function HTTPQuery(queryPath, params) {
                 "the method get|post|data"
         );
     }
-    console.log("params: " + JSON.stringify(params))
+    //console.log("params: " + JSON.stringify(params))
     var method = Object.keys(params)[0];
     switch (method) {
     case "get":
@@ -593,8 +593,8 @@ function storage(storageQueryObj) {
     }
     return HTTPQuery("/storage", {"get": storageQueryObj}).then(
         function(stor) {
-        console.log("stor: " + JSON.stringify(stor))
-        console.log("stor.length = " + stor.length)
+        //console.log("stor: " + JSON.stringify(stor))
+        //console.log("stor.length = " + stor.length)
         if (stor.length === 0) {
             return [""]
             // throw new pollPromise.NotDoneError(
@@ -909,7 +909,7 @@ function pushZeros(output, count) {
 module.exports.Word = EthWord;
 module.exports.Word.zero = EthWord.bind(undefined, "00");
 function EthWord(x) {
-    console.log("EthWord")
+    //console.log("EthWord")
 
     if(typeof(x) === 'undefined'){
         console.log("EthWord on empty object!");
