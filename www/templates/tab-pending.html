@@ -3,15 +3,18 @@
     <ion-refresher pulling-text="Pull to refresh" on-refresh="refresh()">
     </ion-refresher>
     <ion-scroll style="height: 700px"> <!--FIXME dynamic -->
-      <ion-list show-delete="false" can-swipe="true" swipe-direction="both">> 
+      <ion-list show-delete="false" can-swipe="true" swipe-direction="both">
 
-        <ion-item  ng-repeat="p in pending | orderBy:'-time'" type="item-text-wrap" href="#">
+        <ion-item class="list-item__pending" ng-repeat="p in pending | orderBy:'-time'" type="item-text-wrap" href="#">
             
           <!-- <img ng-src="{{c2f.value}}"> -->
-          <h2>{{p.contractName}}</h2>
-          <p>{{p.method}}</p>
-          <p>{{ba.ethbase.Units.convertEth(p.value).from("wei").to("ether").toPrecision(4)}} ETH</p>
-          <i class="icon ion-chevron-right icon-accessory"></i>
+          <div class="pending-date__wrapper">
+            <span class="pending-transaction__date">02/23/2016</span>
+            <span class="pending-transaction__date">04:12 P.M</span>
+          </div>
+          <h2>Bob: So much ether omg</h2>
+          <p>{{p.contractName}}</p>
+          <p>{{p.method}}: {{ba.ethbase.Units.convertEth(p.value).from("wei").to("ether").toPrecision(4)}} ETH</p>
 
           <ion-option-button side="right" class="button-balanced icon ion-edit" ng-click="signTx(p)"></ion-option-button>
           <ion-option-button side="left" class="button-assertive icon ion-trash-a" ng-click="removeTx(p)"></ion-option-button>

@@ -30,6 +30,43 @@
   display: none !important;
 }
 
+.button.button-balanced {
+  border-color: transparent;
+  background-color: #ffd600;
+  color: #fff;
+}
+
+.button.button-balanced.active, .button.button-balanced.activated {
+  background-color: #ffd600;
+  opacity: 0.7;
+}
+
+.item.list-item__pending {
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.pending-date__wrapper {
+  position: absolute;
+  top: 17px;
+  right: 10px;
+  text-align: right;
+}
+
+.pending-transaction__date {
+  display: block;
+  font-size: 11px;
+  color: #ccc;
+  line-height: 12px;
+}
+
+.button.button-assertive.active, .button.button-assertive.activated {
+  background-color: #e53b51;
+}
+
+.button.button-assertive, .button.button-assertive {
+  background-color: #e53b51;
+}
+
 footer {
   position: absolute;
   bottom: 10px;
