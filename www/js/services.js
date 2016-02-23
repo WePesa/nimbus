@@ -115,6 +115,12 @@ angular.module('starter.services', ['underscore', 'config', 'ngCordova', 'blocka
   };
 })
 
+// IPFS hashes
+// pirate.jpg:    QmPtLvhyZR6BcBPK52D6B67vUmeufPKGom9yB6ss19i5Uz
+// business.jpg:  QmX7Lc9FZRNHdRstjimcUrHX2jHCcukvRZ7huneZ2kvqxn
+// jesus:         QmW95EqBGLCkbW6nTPcEkDL4MtsnzkHgrxj8KRwTMDyaRR
+// bach           QmZjQqCfkVtxjx5yNvvEKFEnTNnz2zsuJCyZuZgPpUPW5D
+
 .factory('Accounts', function ($http, $rootScope, $stateParams, $q, $window, _, config, blockapps, $ionicPlatform, ipfs_, lightwallet_, $localstorage) { //$cordovaKeychain, $cordovaTouchID
 
   var p1 = {

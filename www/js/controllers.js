@@ -189,11 +189,18 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
   };
 })
 
-.controller('SettingsCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner) {
+.controller('SettingsCtrl', function($scope, Accounts, _, $cordovaBarcodeScanner, $http, config) {
 
   $scope.settings = {
     camera2: JSON.stringify($cordovaBarcodeScanner.scan),
     camera: (JSON.stringify($cordovaBarcodeScanner) !== "{}")
+  };
+
+  $scope.refill = function(){
+    console.log("putting TXs...")
+    $http.get(config.keyserver + '/utils/').success(function(r){
+      console.log("success")
+    })
   };
 
   if (typeof $cordovaBarcodeScanner === 'undefined') {

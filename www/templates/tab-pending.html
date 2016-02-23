@@ -12,6 +12,9 @@
             <span class="pending-transaction__date">02/23/2016</span>
             <span class="pending-transaction__date">04:12 P.M</span>
           </div> -->
+          <div class="pending-date__wrapper">
+          <span class="pending-transaction__date">{{p.message}}</span>
+          </div>
           <h2>Transaction</h2>
           <p>{{p.contractName}}</p>
           <p>{{p.method}}: {{ba.ethbase.Units.convertEth(p.value).from("wei").to("ether").toPrecision(4)}} ETH</p>
