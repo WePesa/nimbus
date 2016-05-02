@@ -8,5 +8,5 @@ Ionic + Material + ngCordova (touch, keychain) + blockapps-js + eth-lightwallet
 ## Installation
 
 `npm install`
-`ionid platform add ios`
+`ionic platform add ios`
 `ionic emulate -lc --address=localhost ios`
