@@ -1,5 +1,4 @@
 # nimbus
-## /ˈkōän/
 
 Ionic + Material + ngCordova (touch, keychain) + blockapps-js + IPFS + persona
 
