@@ -18,12 +18,19 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
     Accounts.balance().success(function(res){
       console.log(JSON.stringify(res))
-      $scope.balance = blockapps.ethbase.Units.convertEth(res[0].balance).from("wei").to("ether").toPrecision(4)
+      if(res[0]){
+        $scope.balance = blockapps.ethbase.Units.convertEth(res[0].balance).from("wei").to("ether").toPrecision(4)
+      } else {
+        $scope.balance = 0
+      }
     })
 
-    Transactions.all(Accounts.getCurrentAddress()).success(function(response){
-      $scope.lastAmount = blockapps.ethbase.Units.convertEth(response[0].value).from("wei").to("ether").toPrecision(4)
-      $scope.lastTo = response[0].to;
+    var currentAddress = Accounts.getCurrentAddress();
+    Transactions.all(currentAddress).success(function(response){
+      var tx = response[response.length-1];
+      var sign = tx.from == currentAddress ? 1 : -1;
+      $scope.lastAmount = sign*blockapps.ethbase.Units.convertEth(tx.value).from("wei").to("ether").toPrecision(4)
+      $scope.lastTo = tx.to;
     })
 
     Accounts.getPending().success(function(response){
@@ -81,7 +88,9 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
 
   $scope.$on('$ionicView.enter', function(e) {
 
-    Transactions.all(Accounts.getCurrentAddress()).success(function(response){
+    var myAddr = Accounts.getCurrentAddress();
+
+    Transactions.all(myAddr).success(function(response){
       console.log("TransactionsCtrl.all()") 
 
       $scope.c2fmap2 = _.object(response, response.map(function(x){return Transactions.face(x.hash)}))
@@ -89,7 +98,8 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
       $scope.faces = response.map(function(x){return Transactions.face(x.hash)})
 
       $scope.c2fmap = response.map(function(value, index) {
-        value.value = blockapps.ethbase.Units.convertEth(value.value).from("wei").to("ether").toPrecision(4)
+        var sign = value.from == myAddr ? -1 : 1
+        value.value = sign*blockapps.ethbase.Units.convertEth(value.value).from("wei").to("ether").toPrecision(4)
         return {
             data: value,
             value: $scope.faces[index]

@@ -16,12 +16,12 @@
           <span class="pending-transaction__date">{{p.message}}</span>
           </div>
           <h2>Transaction</h2>
-          <p>{{p.contractName}}</p>
-          <p>{{p.method}}: {{ba.ethbase.Units.convertEth(p.value).from("wei").to("ether").toPrecision(4)}} ETH</p>
+          <p>{{p.call.contractName}}</p>
+          <p>{{p.call.method}}: {{ba.ethbase.Units.convertEth(p.tx.value).from("wei").to("ether").toPrecision(4)}} ETH</p>
           <i class="ion-arrow-left-a" data-pack="default" data-tags=""></i>
 
-          <ion-option-button side="right" class="button-balanced icon ion-edit" ng-click="signTx(p)"></ion-option-button>
-          <ion-option-button side="left" class="button-assertive icon ion-trash-a" ng-click="removeTx(p)"></ion-option-button>
+          <ion-option-button side="right" class="button-balanced icon ion-edit" ng-click="signTx(p); removeTx(p);"></ion-option-button>
+          <ion-option-button side="left" class="button-assertive icon ion-trash-a" ng-click="removeTx(p);"></ion-option-button>
         </ion-item>
       </ion-list>
     </ion-scroll>
