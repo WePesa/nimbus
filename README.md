@@ -6,7 +6,7 @@ Ionic + Material + ngCordova (touch, keychain) + blockapps-js + IPFS + persona
 
 ## Requirements
 
-(`bloc`)[http://github.com/blockapps/bloc]
+[`bloc`](http://github.com/blockapps/bloc)
 
 ## Installation
 
@@ -60,3 +60,5 @@ contract Payout {
      }
 }
 ```
+
+![nimbus flow](flow.gif)
