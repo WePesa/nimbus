@@ -1,6 +1,6 @@
 # nimbus
 
-[![blockapps nimbus](https://raw.githubusercontent.com/blockapps/nimbus/feature/v1.1_upgrade/nimbus.gif?token=AAjx6P2Z2gFm2b1EfRYrTCnxo-fevHgNks5XPNLiwA%3D%3D)]
+![blockapps nimbus](nimbus.gif)
 
 Ionic + Material + ngCordova (touch, keychain) + blockapps-js + IPFS + persona
 
@@ -33,3 +33,30 @@ Addresses hard-coded (for now) are:
 
 1. Open `nimbus` after installing it. Go to `pending transactions` under your chosen user. You should see them populate as you repeate the commands in the preparation above.
 2. Sign (or delete) a transaction and see it update in the transaction status. You might need to click around and refresh. You can also confirm by looking at the `/pending` route, above.
+
+## Example use case
+
+Consider the following contract that pays out dividends to two persona:
+
+```javascript
+contract Payout {
+     address Pirate;
+     address Businessguy;
+
+     mapping (address => uint) ownershipDistribution; 
+
+     function Setup() {
+       Pirate       = 0x903b4a914940f08399e41dddcab8e1ea8939cbab;
+       Businessguy  = 0x1cee1690d65268ca551bcd2791c570a8fcac5e7a;
+
+       ownershipDistribution[Pirate]       = 35;
+       ownershipDistribution[Businessguy]  = 65;
+     }
+
+     function Dividend() {
+       uint bal = this.balance;
+       Pirate.send(bal * ownershipDistribution[Pirate] / 100); 
+       Businessguy.send(bal * ownershipDistribution[Businessguy] / 100);
+     }
+}
+```
