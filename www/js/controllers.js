@@ -26,6 +26,7 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
     })
 
     var currentAddress = Accounts.getCurrentAddress();
+    $scope.address = currentAddress;
     Transactions.all(currentAddress).success(function(response){
       var tx = response[response.length-1];
       var sign = tx.from == currentAddress ? 1 : -1;
@@ -59,7 +60,11 @@ angular.module('starter.controllers', ['underscore', 'config', 'blockapps'])
   $scope.refresh = function(){
     Accounts.getPending().success(function(response){
       console.log("response: " + response.length)
-      $scope.pending = response;
+      if(response.length === 0){
+        $scope.pending = 0;
+      } else {
+         $scope.pending = response;
+      }
     })
   };
 
