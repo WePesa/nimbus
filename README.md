@@ -1,6 +1,6 @@
 # nimbus
 
-[![blockapps nimbus](nimbus.gif)]
+![blockapps nimbus](nimbus.gif)
 
 Ionic + Material + ngCordova (touch, keychain) + blockapps-js + IPFS + persona
 
