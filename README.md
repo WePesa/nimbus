@@ -10,9 +10,11 @@ Ionic + Material + ngCordova (touch, keychain) + blockapps-js + IPFS + persona
 
 ## Installation
 
-`npm install`
-`ionic platform add [platform]`
-`ionic emulate -lc --address=localhost [platform]`
+```sh
+npm install
+ionic platform add [platform]`
+ionic emulate -lc --address=localhost [platform]
+```
 
 where `[platform]` can be `ios, browser, android, ubuntu`...
 
@@ -38,7 +40,7 @@ Addresses hard-coded (for now) are:
 
 Consider the following contract that pays out dividends to two persona:
 
-```javascript
+```js
 contract Payout {
      address Pirate;
      address Businessguy;
