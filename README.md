@@ -8,7 +8,19 @@ Ionic + Material + ngCordova (touch, keychain) + blockapps-js + IPFS + persona
 
 [`bloc`](http://github.com/blockapps/bloc)
 
+###Pre-requisites
+  * `bloc` installation + tutorial
+  * `blockapps-js` tutorial
+  * `strato-api` walkthrough
+  * `pizza-demo` tutorial
+  
+
 ## Installation
+
+Note that this is an unsupported app and you are expected to install and get a working setup of the development tools according to your platform.
+
+### Pre-requisites
+  * [`ionic`](http://ionicframework.com)
 
 ```sh
 npm install
@@ -16,7 +28,7 @@ ionic platform add [platform]`
 ionic emulate -lc --address=localhost [platform]
 ```
 
-where `[platform]` can be `ios, browser, android, ubuntu`...
+where `[platform]` can be `ios, browser, android, ubuntu` depending on what the platform supports that you are developing on.
 
 ## Preparations
 
