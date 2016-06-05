@@ -4,11 +4,7 @@
 
 Ionic + Material + ngCordova (touch, keychain) + blockapps-js + IPFS + persona
 
-## Requirements
-
-[`bloc`](http://github.com/blockapps/bloc)
-
-###Pre-requisites
+##Pre-requisites
   * `bloc` installation + tutorial
   * `blockapps-js` tutorial
   * `strato-api` walkthrough
