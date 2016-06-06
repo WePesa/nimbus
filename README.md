@@ -20,7 +20,7 @@ Note that this is an unsupported app and you are expected to install and get a w
 
 ```sh
 npm install
-ionic platform add [platform]`
+ionic platform add [platform]
 ionic emulate -lc --address=localhost [platform]
 ```
 
@@ -34,9 +34,9 @@ Addresses hard-coded (for now) are:
 - `903b4a914940f08399e41dddcab8e1ea8939cbab` for pirate
 - `1cee1690d65268ca551bcd2791c570a8fcac5e7a` for businessguy
 
-0. `bloc start` in one terminal, compile and upload your favourite contract (on `strato-dev3`)
-1. `bloc genkey pirate` and `bloc genkey businessguy` in the other terminal
-2. `curl -H 'Content-Type: application/json' --data '{"address":"903b4a914940f08399e41dddcab8e1ea8939cbab", "token":"666", "register":1}' localhost:8000/users/pirate/` and `curl -H 'Content-Type: application/json' --data '{"address":"1cee1690d65268ca551bcd2791c570a8fcac5e7a", "token":"667", "register":1}' localhost:8000/users/businessguy/` (right now token is ignored but this should later be a token to identify the phone)
+0. ```bloc start``` in one terminal, compile and upload your favourite contract (on `strato-dev3`)
+1. ```bloc genkey pirate```` and ```bloc genkey businessguy``` in the other terminal
+2. ```curl -H 'Content-Type: application/json' --data '{"address":"903b4a914940f08399e41dddcab8e1ea8939cbab", "token":"666", "register":1}' localhost:8000/users/pirate/``` and ```curl -H 'Content-Type: application/json' --data '{"address":"1cee1690d65268ca551bcd2791c570a8fcac5e7a", "token":"667", "register":1}' localhost:8000/users/businessguy/``` (right now token is ignored but this should later be a token to identify the phone)
 3. Open your contract in the browser and see that you can now call contracts with these newly added addresses. They will be pending on the phone - you can confirm this by calling for example `localhost:8000/addresses/1cee1690d65268ca551bcd2791c570a8fcac5e7a/pending`
 
 ## Usage
