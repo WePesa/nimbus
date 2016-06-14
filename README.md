@@ -2,8 +2,6 @@
 
 ![blockapps nimbus](nimbus.gif)
 
-Ionic + Material + ngCordova (touch, keychain) + blockapps-js + IPFS + persona
-
 ##Pre-requisites
   * `bloc` installation + tutorial
   * `blockapps-js` tutorial
